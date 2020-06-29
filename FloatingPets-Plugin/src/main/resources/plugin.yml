@@ -1,0 +1,31 @@
+name: "FloatingPets"
+version: "2.4.0"
+main: gq.zunarmc.spigot.floatingpets.FloatingPets
+api-version: "1.15"
+softdepend: [Vault, ProtocolLib, LightAPI, WorldGuard, PlaceholderAPI, Common]
+author: "Llama Software, frm Proxenus"
+website: "https://plugins.zunarmc.gq/FloatingPets"
+description: "Refine your cosmetics or survival with an unique and astonishing pet system"
+
+commands:
+   pet:
+     aliases: [floatingpets, fp]
+     description: "Base command for FloatingPets"
+
+permissions:
+  floatingpets.commands.help: {}
+  floatingpets.commands.teleport: {}
+  floatingpets.commands.spawn: {}
+  floatingpets.commands.select: {}
+  floatingpets.commands.ride: {}
+  floatingpets.commands.removeall: {}
+  floatingpets.commands.remove: {}
+  floatingpets.commands.remove.other: {}
+  floatingpets.commands.particle: {}
+  floatingpets.commands.name: {}
+  floatingpets.commands.list: {}
+  floatingpets.commands.light: {}
+  floatingpets.commands.hide: {}
+  floatingpets.commands.hat: {}
+  floatingpets.commands.calloff: {}
+  floatingpets.name.color: {}

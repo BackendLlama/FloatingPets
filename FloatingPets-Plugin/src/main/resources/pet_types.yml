@@ -1,0 +1,125 @@
+types:
+    ebd3c4f0-32a6-4246-b357-e1f723c62f88:
+        name: "Monkey"
+        texture: "http://textures.minecraft.net/texture/5dcea1c34174718af2c0ee003ebeaf08840721ccda01e3e6d40d303ff86d93e1"
+        price: 200
+    ddc5d114-7e42-4040-b713-1e0073b60e86:
+        name: "Bacon"
+        texture: "http://textures.minecraft.net/texture/e7ba22d5df21e821a6de4b8c9d373a3aa187d8ae74f288a82d2b61f272e5"
+    3996d090-b591-4ca9-b971-b1a480019fdc:
+        name: "Elephant"
+        texture: "http://textures.minecraft.net/texture/42c781390e560948ada52b981aafa35dcad7aff6cacef43700f31ae58f3860b7"
+    075a7709-f7e6-4dc7-b132-8e51133eecb4:
+        name: "Dog"
+        texture: "http://textures.minecraft.net/texture/2fed383676f952bcd1a4281465d7fe88b3736a97c5ec95928c33da734de"
+    ddebe752-a4dc-4ce5-adcc-49e1c34a5639:
+        name: "Pigeon"
+        texture: "http://textures.minecraft.net/texture/448544bdb9ddddf6c3d6b5d1532a7ea34fa60d1437da850556c86b1777f537ff"
+    57389cc4-d019-4f17-a488-23ba16495af3:
+        name: "Lucky Block"
+        texture: "http://textures.minecraft.net/texture/238c0d2f1ec26754dca3c7cdae31f1f164883d453e688643da047568e7fa5cc9"
+    c4fc009e-ea6d-4089-b54f-5c34e5713bed:
+        name: "Boy"
+        texture: "http://textures.minecraft.net/texture/34232efc4adb4a922e31c0533a463a8c7f2dafa0a53f69c2f4d34ddb90df87f"
+    6874db8e-a35a-4e23-966a-b33186539ce9:
+        name: "Girl"
+        texture: "http://textures.minecraft.net/texture/cc8ce41219da15128d3d41ecce7988312037093b4feb5d8dc249ae1342db64f6"
+    04b88364-05b6-49ce-81d1-d26be40307ff:
+        name: "Dragon"
+        texture: "http://textures.minecraft.net/texture/f7b1b912521f130d3be8b5a096544f3a75357c5e1931aebdee92bf5a5cdca174"
+    de25d38d-9867-4b16-9235-7a2bf4939ec9:
+        name: "TropicalSlime"
+        texture: "http://textures.minecraft.net/texture/b6c6d3920c5a89885ee89a1b545428dcafa19868f7fe6cbe151b515135cce27d"
+    60a660af-fadd-4fc2-974f-c550338b9605:
+        name: "MagicSlime"
+        texture: "http://textures.minecraft.net/texture/bf60de5b34bdcb1c252f47cbcad41fea6a50e053d795c4af3df81eb3910029e4"
+    3da43817-4f5e-4f0b-8aa9-c6708b9d0cc5:
+        name: "Pikachu"
+        texture: "http://textures.minecraft.net/texture/c047faa0c751d63374f55a92ca7e643406404a89e7774e3c9c98a99f73fd7053"
+    b6832281-dffa-4410-bb1b-2b4c550af95c:
+        name: "Velociraptor"
+        texture: "http://textures.minecraft.net/texture/605838f0200825bc2b0f4cfe25274d48bfea93599f56b20b94a574855f470fb3"
+    af3acc5c-00f7-4e7d-b9de-b8b98706ccd9:
+        name: "Chicken"
+        texture: "http://textures.minecraft.net/texture/f5ddef3166e1f5ebacb17832ea40e0cd37e82f4fea5748370f48e18763ba12d5"
+    8cbe4d70-53c4-4366-b2e0-6d435b6318f8:
+        name: "Snail"
+        texture: "http://textures.minecraft.net/texture/523bfa196f458e870d2c7582dcd1f969128765262d6fb1a35bd4bf4b1a11217b"
+    0f00a64e-6d6e-4717-b5e5-4767d53e5a0c:
+        name: "Turtle"
+        texture: "http://textures.minecraft.net/texture/ad195c216bcf365aadda5ba71fbe7e368c42aa581e065b19ac07bb2e8846b43f"
+    61fc44f7-6108-4b20-9764-a8a9c5707753:
+        name: "Stitch"
+        texture: "http://textures.minecraft.net/texture/99495802b5c874d43d28aee8a59c271c99143461f0336c28cd4eb3113498d57d"
+    2d0e4d7f-678c-48f4-a3c4-744ba4688a74:
+        name: "Burger"
+        texture: "http://textures.minecraft.net/texture/90e7042694e9bf7eef48a33494d988b64a9ef2d5b85b1e65ea87be1c15cce9a3"
+    1c2cb17a-65fc-4a36-bc82-e84046b04f93:
+        name: "Pepsi"
+        texture: "http://textures.minecraft.net/texture/f0368616c74c762a6edcd7bca7b0c7ef854e999676d4317de36497b84ad6131f"
+    080aac3c-6926-4e21-aa66-a8c4551dcb33:
+        name: "Cake"
+        texture: "http://textures.minecraft.net/texture/f687ad4a9ea8f2fd663c097fd9205749cc16f14ac12855fa6fb6928fbe9284a3"
+    42a190b1-673a-4a93-9d4a-02475c6d7575:
+        name: "Panda"
+        texture: "http://textures.minecraft.net/texture/607bb7fef55e411df1d29ad71219aaaa13ab4dae706ab20a04382bf539d1a97b"
+    cda110e5-e0e1-4e23-99fd-9c6f3dc07ffb:
+        name: "Bee"
+        texture: "http://textures.minecraft.net/texture/6c72dac09d255b802df5a53279c0837639be6d0d0648a539eead30f5fd351b7d"
+    03cea449-f288-495f-9120-cf1396929687:
+        name: "Chicken"
+        texture: "http://textures.minecraft.net/texture/f48c73dba21951766f144bde2c0f028260603ac9454de3d67172d7e8ecfdff68"
+    69993a06-cc42-4e55-95a1-e4e01f663f54:
+        name: "Lizard"
+        texture: "http://textures.minecraft.net/texture/81be11da70d84d7264ebef338244eb4f1686a36af08e83a95c863f14d6f1a39"
+    c3a18108-47ed-499e-a807-0e4f372e2181:
+        name: "Parrot"
+        texture: "http://textures.minecraft.net/texture/3ba99328dccdaea8fae3efdbfd1c00d904780ca5790c5dd398a3dd4d19c9d8e8"
+    26cfe75d-d0f4-4eb4-9a8e-5e9e5580f7da:
+        name: "Cat"
+        texture: "http://textures.minecraft.net/texture/db7b8912b8f78afa64ffc0ff3e82f43add6964d7d5ba382857d2beb49a036731"
+    c3f0d5c8-8be2-4b43-8ea6-5f70b85aa522:
+        name: "Frog"
+        texture: "http://textures.minecraft.net/texture/c178189ef8fa7a5b724fb91df9a44784fd85648ed3e3acf6d0ded7b8caa30f07"
+    0531bf20-c01e-4946-985b-991b10c93e9b:
+        name: "Bear"
+        texture: "http://textures.minecraft.net/texture/a100e177e2624ba949588eff81389332eec1d39085aa11c05b3f41c702416e89"
+    d246adf0-9f2d-4f1c-851d-9f10caea0380:
+        name: "Clownfish"
+        texture: "http://textures.minecraft.net/texture/36389acd7c8280d2c8085e6a6a91e182465347cc898db8c2d9bb148e0271c3e5"
+    ac659faf-19de-49c0-91af-e81ace5a2a5e:
+        name: "Magikarp"
+        texture: "http://textures.minecraft.net/texture/a4807493def3efdf3cc482276cea16eee3e0521180f64d5e58f68510daf7b443"
+    b1df48ed-8932-42df-9eae-3779ef063feb:
+        name: "Koala"
+        texture: "http://textures.minecraft.net/texture/e72b8a7561bd3ee292cb54169020afead7277189bf018388d180e39e42a2f4cb"
+    ea1ad86d-a3ab-46eb-9605-c65e183a8f96:
+        name: "Horse"
+        texture: "http://textures.minecraft.net/texture/372d52421d8414577d3f6266440f6842b72767c9c4e3367daee516572a94d5"
+    6101c517-200f-44ae-8dc1-bb4ad70b8703:
+        name: "Owl"
+        texture: "http://textures.minecraft.net/texture/d8bd304d884fa1a477c27a0acaf72d4717c4a97399b2793ed8476f0e83571bfd"
+    980e2e89-03b9-441c-afd4-5834e38379d5:
+        name: "Monkey"
+        texture: "http://textures.minecraft.net/texture/89699ea8b2f90452635f531330a7bc09fd3720d3b96804d976eefbf3a3fa4d17"
+    f8104f5d-6477-4adc-a1bc-ab6e87ea2195:
+        name: "Cow"
+        texture: "http://textures.minecraft.net/texture/f660e91e1f5fc510b5f86520a5516a921f37657f965fdbb233dad8474029a96f"
+    b5c0a662-c0b6-4120-801e-b7bbf0c3db6a:
+        name: "Pug"
+        texture: "http://textures.minecraft.net/texture/18e50cb446745a2dc76046930332e52f9a7cab2b1831eff5570bb3789e28362e"
+    544fe6da-22d6-4e7c-b6a9-5dc5cbfa8640:
+        name: "Llama"
+        texture: "http://textures.minecraft.net/texture/2a5f10e6e6232f182fe966f501f1c3799d45ae19031a1e4941b5dee0feff059b"
+    b34cae78-1e52-439d-a987-27e8038b5589:
+        name: "Fox"
+        texture: "http://textures.minecraft.net/texture/5924be5f74b6431660fd5c4cc0334d91e77e77fdd88d24ea85eb0f38384c7f1a"
+    aedba56f-72cf-490d-94f2-bb0050019cad:
+        name: "IceBear"
+        texture: "http://textures.minecraft.net/texture/19e69c72531655a4b697f39b4ae8adc4c1780c26371e5348328003dc3219873c"
+    34d370c6-65cf-49b1-adb2-0aee9eae10dc:
+        name: "Fish"
+        texture: "http://textures.minecraft.net/texture/3a7fe5a0b6c0d40c18084165d1f21b2c1d01276e0eb15944d5ad3b03de442"
+    039cef7e-ff6c-4e1f-9edc-313e695f187f:
+        name: "Jellyfish"
+        texture: "http://textures.minecraft.net/texture/913f086ccb56323f238ba3489ff2a1a34c0fdceeafc483acff0e5488cfd6c2f1"

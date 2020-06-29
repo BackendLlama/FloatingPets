@@ -1,0 +1,134 @@
+locale:
+    generic:
+        prefix: "&2░ &aFloatingPets &8➡&7 "
+        no-permission: "&7You don't have enough permissions."
+        no-pet: "&cYou don't have a pet."
+        invalid-player: "&cThat player is not online."
+        spawned: "&7Your &2%type%&7 pet named &r%name%&7 was spawned next to you."
+        functionality-disabled: "&cThis functionality has been disabled."
+        world-restricted: "&cYou can't do that in this world."
+        player-only: "&cYou must be a player to execute this command."
+    menus:
+        selector:
+            title: "Select your pet"
+            item: "&3%type%"
+        specification:
+            title: "Specify pet"
+        purchase-confirmation:
+            title: "Confirm your purchase"
+            item-confirm: "&aConfirm"
+            item-cancel: "&cCancel"
+        particle:
+            title: "Select particle"
+            item: "&b%particle%"
+        particle-customization:
+            title: "Customize particle speed"
+            speed-slow: "&3Slow"
+            speed-normal: "&3Normal"
+            speed-fast: "&3Fast"
+            speed-fastest: "&3Fastest"
+    commands:
+        help:
+            index:
+                delimiter: "&a«&2&m-----------------&a&l FloatingPets &2&m-----------------&a»"
+                command: "&2➤ &2/pet %name%%syntax% &7- &a%description%"
+            info:
+                help:
+                    description: "View help index"
+                    syntax: ""
+                name:
+                    description: "Rename your pet"
+                    syntax: "<name>"
+                particle:
+                    description: "Give your pet a particle trail"
+                    syntax: ""
+                hide:
+                    description: "Hide your pet"
+                    syntax: ""
+                select:
+                    description: "Select a new pet"
+                    syntax: "[type]"
+                list:
+                    description: "List available pets"
+                    syntax: ""
+                spawn:
+                    description: "Re-spawn your pet"
+                    syntax: ""
+                teleport:
+                    description: "Teleport your pet to yourself"
+                    syntax: ""
+                ride:
+                    description: "Ride your pet"
+                    syntax: ""
+                light:
+                    description: "Use your pet as a torch"
+                    syntax: ""
+                remove:
+                    description: "Remove your pet"
+                    syntax: ""
+                hat:
+                    description: "Use your pet as a hat"
+                    syntax: ""
+                calloff:
+                    description: "Call off targets"
+                    syntax: ""
+        select:
+            invalid-type: "&cThere is no pet type by that name."
+            removed-current: "&7You removed your current pet."
+            pet-limit: "&cYou have reached the limit for maximum amount of pets, please remove a pet with /pet remove before trying again."
+            no-permission: "&cYou don't have permission to select this pet."
+        spawn:
+            no-pet: "&cYou don't have a pet, select one with &2/pet select."
+            already-spawned: "&cYour pet is already spawned."
+        name:
+            too-short: "&cPet names have to be at least %min_length% characters long."
+            too-long: "&cPet names cannot be longer than %max_length% characters."
+            named: "&7You renamed your pet to &3%name%&7."
+        particle:
+            invalid-type: "&cThere is no particle by that name."
+            no-permission: "&cYou don't have permission to use this particle."
+            set: "&7Set pet particle to &3%name% &7with a speed of &3%speed%&7."
+            no-particle: "&cYour pet doesn't have a particle."
+            removed-current: "&7You removed previous particle."
+            stopped: "&7Stopped displaying particle."
+        hat:
+            no-longer: "&7Your pet is no longer riding you."
+            put: "&7Your pet has been put on your head."
+        hide:
+            not-visible: "&cYour pet is not visible."
+            hidden: "&7Your pet is now hidden."
+        light:
+            attached: "&7Spawned light attached to your pet."
+            detached: "&7Detached light from you pet."
+        list:
+            header: "&2Selectable pets [&a%amount%&2]"
+            format: "&2- &a%name% %shopInfo%"
+        remove:
+            removed: "&7You removed your pet."
+            other:
+                removed: "&7You removed &3%name%'s &7pet"
+                no-pet: "&cThat player doesn't have a pet."
+        teleport:
+            teleported: "&7Your pet has been teleported to you."
+        ride:
+            already-riding: "&cYou're already riding your pet."
+            riding: "&7You are now riding your pet."
+        calloff:
+            called-off: "&7Called off any targets."
+        removeall:
+            removed: "&7Removed all pets with applicable metadata and entity type."
+    pet:
+        died: "&cYour %type% pet died."
+        death-messages:
+            general:
+                - "%display_name% died"
+            killed:
+                - "%display_name% was killed by %killer%"
+                - "%display_name% was slain by %killer%"
+    format:
+        shop_lore_price_format: "&aBuy for &2%price% $"
+    selector:
+        name: "&3%type%"
+    shop:
+        no_afford: "&cYou can't afford that."
+        bought: "&7You bought a &3%type% &7for &3%price%"

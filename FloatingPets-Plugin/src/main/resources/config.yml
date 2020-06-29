@@ -1,0 +1,114 @@
+settings:
+    metrics:
+        enabled: true
+    storage:
+        type: "flatfile"
+        options:
+            preload:
+                type: true
+                pet: true
+                locale: true
+                misc: true
+            flatfile:
+                files:
+                    pet: "pets.yml"
+                    type: "pet_types.yml"
+                    misc: "misc.yml"
+            mysql:
+                prefix: "fp_"
+                server: "localhost"
+                port: 3306
+                database: "minecraft"
+                username: "minecraft"
+                password: "password"
+                max_pools: 8
+    pet:
+        cosmetic_mode: false
+        spawn_on_join: true
+        multiple_pets:
+            enabled: false
+            limits:
+                default: 2
+                vip: 4
+                mvp: 8
+        shop:
+            enabled: false
+            options:
+                format:
+                    text: "&6[Price: %price% %currency_symbol%]"
+                    currency_symbol: "$"
+                    free: "&a[Free]"
+                    decimal: "#"
+        name:
+            format: "%name% &c(%health% HP)"
+            default_name: "%owner%'s pet"
+            custom:
+                enabled: true
+                colors: true
+                min_length: 1
+                max_length: 16
+        particle:
+            enabled: true
+            allow_customization: true
+            display:
+                default: REDSTONE
+                barrier: BARRIER
+                crit: DIAMOND_SWORD
+            filter:
+                enabled: "none"
+                exclude:
+                    - "DRAGON_BREATH"
+                    - "COMPOSTER"
+                include:
+                    - "NOTE"
+            speeds:
+                slow: 35
+                normal: 20
+                fast: 15
+                fastest: 10
+        hat:
+            vanilla:
+                in_air:
+                    enabled: true
+                    distance: 20
+                swimming:
+                    enabled: false
+            cosmetic:
+                enabled: true
+        light:
+            cosmetic:
+                enabled: false
+        health:
+            enabled: true
+            options:
+                default_health: 20.0
+                max_health: 20.0
+                healing:
+                    enabled: true
+                death_message: true
+                remove_on_death: true
+                damage:
+                    fall: true
+                    void: false
+                    attack:
+                        enabled: true
+                        options:
+                            player_attack: true
+                            owner_attack: false
+        teleportation:
+            distance:
+                enabled: true
+                distance: 20.0
+            call:
+                enabled: true
+
+        riding:
+            enabled: false
+            options:
+                player_rotation: true
+                allow_fly: true
+    world_filter:
+        enabled: false
+        excluded:
+            - "Spawn"
+        respawn: true
