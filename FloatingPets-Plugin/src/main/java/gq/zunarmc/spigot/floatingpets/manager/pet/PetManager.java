@@ -2,15 +2,14 @@ package gq.zunarmc.spigot.floatingpets.manager.pet;
 
 import gq.zunarmc.spigot.floatingpets.Constants;
 import gq.zunarmc.spigot.floatingpets.FloatingPets;
-import gq.zunarmc.spigot.floatingpets.locale.Locale;
 import gq.zunarmc.spigot.floatingpets.api.model.FloatingPet;
 import gq.zunarmc.spigot.floatingpets.api.model.Pet;
 import gq.zunarmc.spigot.floatingpets.api.model.Setting;
+import gq.zunarmc.spigot.floatingpets.locale.Locale;
 import gq.zunarmc.spigot.floatingpets.task.PetHealthRegenerationTask;
 import gq.zunarmc.spigot.floatingpets.task.PetTickTask;
+import gq.zunarmc.spigot.floatingpets.util.NBTEditor;
 import lombok.Getter;
-import org.bukkit.Bukkit;
-import org.bukkit.Difficulty;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.ArmorStand;
@@ -58,14 +57,6 @@ public class PetManager {
         if(world == null)
             return;
 
-        Difficulty previousDifficulty = world.getDifficulty();
-        boolean useNameTag = world.getDifficulty() != Difficulty.PEACEFUL;
-        if(!useNameTag){
-            world.setDifficulty(Difficulty.EASY);
-            pet.getOnlineOwner().sendMessage("§cFloatingPets cannot normally spawn in peaceful worlds," +
-                    " this has been solved with a very hacky and error prone fix, please change difficulty.");
-        }
-
         ArmorStand nameTag = onlineOwner.getWorld().spawn(location, ArmorStand.class);
         nameTag.setSmall(true);
         nameTag.setVisible(false);
@@ -82,14 +73,15 @@ public class PetManager {
         if(floatingPet == null)
             return;
 
-        floatingPet.getEntity().setMetadata(Constants.METADATA_PET, new FixedMetadataValue(plugin, pet.getUniqueId()));
+        floatingPet.getEntity().setMetadata(Constants.METADATA_PET,
+                new FixedMetadataValue(plugin, pet.getUniqueId()));
 
         pet.setNameTag(nameTag);
         pet.setEntity(floatingPet);
+        pet.attachNameTag();
 
-        if(useNameTag) {
-            pet.attachNameTag();
-        }
+        NBTEditor.set(pet.getEntity().getEntity(), 1, "FPComponent");
+        NBTEditor.set(nameTag, 1, "FPComponent");
 
         if(pet.hasParticle())
             pet.getParticle().start();
@@ -110,9 +102,6 @@ public class PetManager {
                     true, new Locale.Placeholder("type", pet.getType().getName()),
                     new Locale.Placeholder("name", pet.getName()));
         }
-
-        Bukkit.getScheduler().scheduleSyncDelayedTask(plugin,
-                () -> world.setDifficulty(previousDifficulty), 5L);
 
     }
 

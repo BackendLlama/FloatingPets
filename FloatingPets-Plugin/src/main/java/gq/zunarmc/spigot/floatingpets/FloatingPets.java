@@ -12,6 +12,7 @@ import gq.zunarmc.spigot.floatingpets.listener.*;
 import gq.zunarmc.spigot.floatingpets.locale.Locale;
 import gq.zunarmc.spigot.floatingpets.manager.command.CommandManager;
 import gq.zunarmc.spigot.floatingpets.manager.config.YAMLManager;
+import gq.zunarmc.spigot.floatingpets.manager.cooldown.CooldownManager;
 import gq.zunarmc.spigot.floatingpets.manager.menu.MenuManager;
 import gq.zunarmc.spigot.floatingpets.manager.metrics.DagaMetrics;
 import gq.zunarmc.spigot.floatingpets.manager.pet.PetManager;
@@ -52,6 +53,7 @@ public final class FloatingPets extends JavaPlugin {
 
     @Getter private final YAMLManager yamlManager;
     @Getter private final PetManager petManager;
+    @Getter private final CooldownManager cooldownManager;
 
     @Getter private final Gson gson;
     @Getter private final Utility utility;
@@ -72,6 +74,7 @@ public final class FloatingPets extends JavaPlugin {
     public FloatingPets(){
         commandManager     = new CommandManager(this);
         yamlManager        = new YAMLManager(this);
+        cooldownManager    = new CooldownManager();
         registrationHelper = new RegistrationHelper(this);
         utility            = new Utility(this);
         nmsHelper          = new NMSHelper();

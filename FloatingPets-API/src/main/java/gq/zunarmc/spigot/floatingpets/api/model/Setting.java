@@ -37,6 +37,8 @@ public enum Setting {
     PET_NAME_CUSTOM_MAXIMUM_LENGTH("pet.name.custom.max_length"),
     PET_NAME_FORMAT("pet.name.format"),
 
+    PET_COOLDOWN_SELECT("pet.cooldown.select.enabled"),
+
     PET_DEATH_MESSAGES("pet.health.options.death_message"),
     PET_RESPAWN_ON_DEATH("pet.health.options.respawn_on_death"),
     PET_REMOVE_ON_DEATH("pet.health.options.remove_on_death"),

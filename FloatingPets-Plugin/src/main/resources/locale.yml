@@ -125,6 +125,8 @@ locale:
             killed:
                 - "%display_name% was killed by %killer%"
                 - "%display_name% was slain by %killer%"
+    cooldown:
+        timeout: "&cYou can use this again in %time% seconds."
     format:
         shop_lore_price_format: "&aBuy for &2%price% $"
     selector:

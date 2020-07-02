@@ -23,7 +23,6 @@ settings:
                 password: "password"
                 max_pools: 8
     pet:
-        cosmetic_mode: false
         spawn_on_join: true
         multiple_pets:
             enabled: false
@@ -39,6 +38,13 @@ settings:
                     currency_symbol: "$"
                     free: "&a[Free]"
                     decimal: "#"
+        cooldown:
+            select:
+                enabled: false
+                limits:
+                    default: 120
+                    vip: 60
+                    mvp: 10
         name:
             format: "%name% &c(%health% HP)"
             default_name: "%owner%'s pet"

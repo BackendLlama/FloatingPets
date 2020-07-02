@@ -1,6 +1,5 @@
 package gq.zunarmc.spigot.floatingpets.util;
 
-import gq.zunarmc.spigot.floatingpets.util.ItemBuilder;
 import gq.zunarmc.spigot.floatingpets.Constants;
 import gq.zunarmc.spigot.floatingpets.FloatingPets;
 import gq.zunarmc.spigot.floatingpets.api.model.Pet;
@@ -14,13 +13,9 @@ import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 import java.text.DecimalFormat;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public final class Utility {
 
@@ -121,23 +116,24 @@ public final class Utility {
         return loc.getBlockY() - distance;
     }
 
-    public int getMaximumPetLimit(Player player){
+    public long getPermissionBasedSetting(Player player, String sectionKey, String node, long opValue){
         ConfigurationSection section = plugin.getConfig()
-                .getConfigurationSection("settings.pet.multiple_pets.limits");
+                .getConfigurationSection("settings." + sectionKey);
+
         if(section == null)
             return 0;
 
         if(player.isOp())
-            return Integer.MAX_VALUE;
+            return opValue;
 
-        int limit = 0;
+        long limit = 0;
         if(section.contains("default")){
-            limit = section.getInt("default");
+            limit = section.getLong("default");
         }
 
         for(String key : section.getKeys(false)){
-            if(player.hasPermission("floatingpets.limit." + key)){
-                int val = section.getInt(key);
+            if(player.hasPermission("floatingpets." + node + "." + key)){
+                long val = section.getLong(key);
                 if(val > limit){
                     limit = val;
                 }
@@ -145,27 +141,6 @@ public final class Utility {
         }
 
         return limit;
-    }
-
-    public PotionEffect switchEffectList(List<PotionEffect> effects, PotionEffectType oldType, PotionEffectType newType){
-
-        List<PotionEffect> oldEffects = effects.stream()
-                .filter(effect -> effect.getType().equals(oldType))
-                .collect(Collectors.toList());
-
-        if(oldEffects.isEmpty())
-            return new PotionEffect(PotionEffectType.REGENERATION,0,0);
-
-        return switchEffectByType(oldEffects.get(0), newType);
-    }
-
-    private PotionEffect switchEffectByType(PotionEffect current, PotionEffectType type){
-        return new PotionEffect(type,
-                                current.getDuration(),
-                                current.getAmplifier(),
-                                current.isAmbient(),
-                                current.hasParticles(),
-                                current.hasIcon());
     }
 
 }

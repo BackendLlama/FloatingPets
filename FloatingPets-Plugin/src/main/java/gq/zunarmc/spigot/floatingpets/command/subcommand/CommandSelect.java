@@ -10,6 +10,7 @@ import gq.zunarmc.spigot.floatingpets.menu.MenuPurchaseConfirmation;
 import gq.zunarmc.spigot.floatingpets.api.model.Pet;
 import gq.zunarmc.spigot.floatingpets.api.model.PetType;
 import gq.zunarmc.spigot.floatingpets.api.model.Setting;
+import gq.zunarmc.spigot.floatingpets.model.misc.Cooldown;
 import gq.zunarmc.spigot.floatingpets.model.pet.IPet;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -32,6 +33,20 @@ public class CommandSelect extends Command {
         Player player = (Player) sender;
         List<Pet> currentPets = plugin.getStorageManager().getPetsByOwner(player.getUniqueId());
 
+        boolean settingCooldown = plugin.isSetting(Setting.PET_COOLDOWN_SELECT);
+
+        if(settingCooldown){
+            Optional<Cooldown> cooldown = plugin.getCooldownManager()
+                    .getCooldown(player.getUniqueId(), Cooldown.Type.SELECT);
+
+            if(cooldown.isPresent()) {
+                locale.send(player, "cooldown.timeout", false,
+                        new Locale.Placeholder("time", String.valueOf(cooldown.get().getTimeLeft() / 1000)));
+
+                return;
+            }
+        }
+
         if(!plugin.isSetting(Setting.MULTIPLE_PETS)
                 && !plugin.getPetManager().getPetByOwner(player).isEmpty()) {
 
@@ -42,7 +57,9 @@ public class CommandSelect extends Command {
         }
 
         if(plugin.isSetting(Setting.MULTIPLE_PETS) && plugin.getStorageManager()
-                .getPetsByOwner(player.getUniqueId()).size() >= plugin.getUtility().getMaximumPetLimit(player)){
+                .getPetsByOwner(player.getUniqueId()).size()
+                            >= plugin.getUtility().getPermissionBasedSetting(player, "pet.multiple_pets.limits",
+                                                                                     "limit", Long.MAX_VALUE)){
 
             locale.send(player, "commands.select.pet-limit", true);
             return;
@@ -92,6 +109,15 @@ public class CommandSelect extends Command {
 
             plugin.getStorageManager().storePet(pet, true);
             plugin.getPetManager().spawnPet(pet, player.getLocation(), player, true);
+
+            if(settingCooldown) {
+                long expiry = System.currentTimeMillis()
+                        + 1000 * plugin.getUtility().getPermissionBasedSetting(player, "pet.cooldown.select.limits",
+                                                                                       "select_cooldown", 0);
+
+                plugin.getCooldownManager().addCooldown(player.getUniqueId(), Cooldown.Type.SELECT, expiry);
+            }
+
         }
     }
 
