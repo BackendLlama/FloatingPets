@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @CommandInfo(name = "particle", inGame = true)
 public class CommandParticle extends Command {
@@ -37,8 +38,14 @@ public class CommandParticle extends Command {
                             || firstArgument.equalsIgnoreCase("off"));
 
             if(!stop) {
+                List<ParticleInfo> list = enabledParticles
+                        .stream()
+                        .filter(info ->
+                                player.hasPermission("floatingpets.particle." + info.getParticle().name().toLowerCase()))
+                        .collect(Collectors.toList());
+
                 MenuPetParticle menu = new MenuPetParticle(plugin.getStorageManager()
-                        .getLocaleByKey("menus.particle.title"), enabledParticles);
+                        .getLocaleByKey("menus.particle.title"), list);
 
                 menu.setData("pet", pet);
                 menu.setData("index", index);
