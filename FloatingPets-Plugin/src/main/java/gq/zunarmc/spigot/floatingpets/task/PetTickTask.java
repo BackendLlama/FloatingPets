@@ -2,8 +2,11 @@ package gq.zunarmc.spigot.floatingpets.task;
 
 import gq.zunarmc.spigot.floatingpets.FloatingPets;
 import gq.zunarmc.spigot.floatingpets.api.model.Pet;
+import gq.zunarmc.spigot.floatingpets.api.model.Skill;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
+
+import java.util.Optional;
 
 public class PetTickTask implements Runnable {
 
@@ -30,6 +33,7 @@ public class PetTickTask implements Runnable {
         tickMovement();
         tickAutomaticHat();
         tickChangeUpdate();
+        tickBeaconSkill();
     }
 
     private void tickMovement(){
@@ -71,6 +75,14 @@ public class PetTickTask implements Runnable {
             pet.getNameTag().setCustomName(plugin.getUtility().formatTitle(pet,
                     owner.hasPermission("floatingpets.name.color")));
         }
+    }
+
+    private void tickBeaconSkill(){
+        Optional<Skill> skill = pet.getSkillOfType(Skill.Type.BEACON);
+        if(!skill.isPresent())
+            return;
+
+        skill.get().applySkill(pet);
     }
 
     private boolean hasChanged(){

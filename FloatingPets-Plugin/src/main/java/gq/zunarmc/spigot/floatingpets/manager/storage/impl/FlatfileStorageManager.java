@@ -1,6 +1,7 @@
 package gq.zunarmc.spigot.floatingpets.manager.storage.impl;
 
 import gq.zunarmc.spigot.floatingpets.FloatingPets;
+import gq.zunarmc.spigot.floatingpets.api.model.Skill;
 import gq.zunarmc.spigot.floatingpets.manager.config.YAMLManager;
 import gq.zunarmc.spigot.floatingpets.manager.storage.StorageManager;
 import gq.zunarmc.spigot.floatingpets.api.model.Pet;
@@ -10,6 +11,7 @@ import gq.zunarmc.spigot.floatingpets.model.config.YAMLFile;
 import gq.zunarmc.spigot.floatingpets.model.misc.Food;
 import gq.zunarmc.spigot.floatingpets.model.pet.IParticle;
 import gq.zunarmc.spigot.floatingpets.model.pet.IPet;
+import gq.zunarmc.spigot.floatingpets.util.Utility;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.configuration.ConfigurationSection;
@@ -19,6 +21,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class FlatfileStorageManager extends StorageManager {
 
@@ -103,10 +106,6 @@ public class FlatfileStorageManager extends StorageManager {
                 break;
             }
 
-            default:{
-                return;
-            }
-
         }
     }
 
@@ -127,8 +126,17 @@ public class FlatfileStorageManager extends StorageManager {
 
             String name = petSection.getString("name");
 
+            List<Skill> skills = petSection.getStringList("skills")
+                    .stream()
+                    .map(Utility::deserializeSkill)
+                    .collect(Collectors.toList());
+
             IPet.IPetBuilder petBuilder = IPet.builder()
-                    .uniqueId(uniqueId).owner(owner).type(type.get()).name(name);
+                                                .uniqueId(uniqueId)
+                                                .owner(owner)
+                                                .type(type.get())
+                                                .skills(skills)
+                                                .name(name);
 
             gq.zunarmc.spigot.floatingpets.api.model.Particle petParticle = null;
             if(petSection.contains("particle")){

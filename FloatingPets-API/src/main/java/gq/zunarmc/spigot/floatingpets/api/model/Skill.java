@@ -1,8 +1,12 @@
 package gq.zunarmc.spigot.floatingpets.api.model;
 
+import lombok.Getter;
+
 public abstract class Skill {
 
+    @Getter
     public final Type type;
+    @Getter
     public final int level;
 
     public Skill(Type type, int level){
@@ -14,12 +18,28 @@ public abstract class Skill {
 
     public abstract void applySkill(Pet pet);
 
-    public enum Type {
-        MAX_HEALTH,
-        ATTACK_DAMAGE,
-        ATTACK_SPEED,
+    public enum Implementation {
+
+        ATTRIBUTE,
         BEACON,
-        STORAGE
+        CUSTOM
+
+    }
+
+    public enum Type {
+        MAX_HEALTH(Implementation.ATTRIBUTE),
+        ATTACK_DAMAGE(Implementation.ATTRIBUTE),
+        ATTACK_SPEED(Implementation.ATTRIBUTE),
+        BEACON(Implementation.BEACON),
+        STORAGE(Implementation.CUSTOM);
+
+        @Getter
+        private final Implementation implementation;
+
+        Type(Implementation implementation) {
+            this.implementation = implementation;
+        }
+
     }
 
 }

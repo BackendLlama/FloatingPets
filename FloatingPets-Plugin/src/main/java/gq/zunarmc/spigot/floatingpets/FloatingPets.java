@@ -2,15 +2,22 @@ package gq.zunarmc.spigot.floatingpets;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import gq.zunarmc.spigot.floatingpets.api.model.Pet;
+import gq.zunarmc.spigot.floatingpets.api.model.Setting;
 import gq.zunarmc.spigot.floatingpets.command.BaseCommandExecutor;
 import gq.zunarmc.spigot.floatingpets.command.subcommand.*;
+import gq.zunarmc.spigot.floatingpets.external.packet.SteerPacketListener;
 import gq.zunarmc.spigot.floatingpets.external.placeholder.PetPlaceholderExpansion;
 import gq.zunarmc.spigot.floatingpets.external.wg.WGManager;
 import gq.zunarmc.spigot.floatingpets.helper.NMSHelper;
 import gq.zunarmc.spigot.floatingpets.helper.RegistrationHelper;
-import gq.zunarmc.spigot.floatingpets.listener.*;
+import gq.zunarmc.spigot.floatingpets.listener.EntityListener;
+import gq.zunarmc.spigot.floatingpets.listener.MenuListener;
+import gq.zunarmc.spigot.floatingpets.listener.PlayerListener;
+import gq.zunarmc.spigot.floatingpets.listener.VehicleListener;
 import gq.zunarmc.spigot.floatingpets.locale.Locale;
 import gq.zunarmc.spigot.floatingpets.manager.command.CommandManager;
+import gq.zunarmc.spigot.floatingpets.manager.config.SettingManager;
 import gq.zunarmc.spigot.floatingpets.manager.config.YAMLManager;
 import gq.zunarmc.spigot.floatingpets.manager.cooldown.CooldownManager;
 import gq.zunarmc.spigot.floatingpets.manager.menu.MenuManager;
@@ -20,19 +27,13 @@ import gq.zunarmc.spigot.floatingpets.manager.sql.MySQLManager;
 import gq.zunarmc.spigot.floatingpets.manager.storage.StorageManager;
 import gq.zunarmc.spigot.floatingpets.manager.storage.impl.FlatfileStorageManager;
 import gq.zunarmc.spigot.floatingpets.manager.storage.impl.SQLStorageManager;
-import gq.zunarmc.spigot.floatingpets.api.model.Pet;
-import gq.zunarmc.spigot.floatingpets.api.model.Setting;
 import gq.zunarmc.spigot.floatingpets.model.config.ConfigDefinition;
-import gq.zunarmc.spigot.floatingpets.external.packet.SteerPacketListener;
 import gq.zunarmc.spigot.floatingpets.model.config.YAMLFile;
-import gq.zunarmc.spigot.floatingpets.model.misc.ParticleInfo;
 import gq.zunarmc.spigot.floatingpets.util.Utility;
 import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.command.PluginCommand;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
@@ -42,7 +43,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public final class FloatingPets extends JavaPlugin {
 
@@ -53,6 +53,7 @@ public final class FloatingPets extends JavaPlugin {
 
     @Getter private final YAMLManager yamlManager;
     @Getter private final PetManager petManager;
+    @Getter private final SettingManager settingManager;
     @Getter private final CooldownManager cooldownManager;
 
     @Getter private final Gson gson;
@@ -74,6 +75,7 @@ public final class FloatingPets extends JavaPlugin {
     public FloatingPets(){
         commandManager     = new CommandManager(this);
         yamlManager        = new YAMLManager(this);
+        settingManager     = new SettingManager(this);
         cooldownManager    = new CooldownManager();
         registrationHelper = new RegistrationHelper(this);
         utility            = new Utility(this);
@@ -269,49 +271,6 @@ public final class FloatingPets extends JavaPlugin {
             economy = rsp.getProvider();
         }
 
-    }
-
-    public List<ParticleInfo> getEnabledParticles(){
-
-        ConfigurationSection section = getConfig().getConfigurationSection("settings.pet.particle.display");
-        if(section == null)
-            return new ArrayList<>();
-
-        String filter = getStringSetting(Setting.PET_PARTICLE_FILTER);
-        List<org.bukkit.Particle> particles;
-
-        if(!filter.equalsIgnoreCase("none")){
-            if(!(filter.equalsIgnoreCase("exclude") || filter.equalsIgnoreCase("include"))){
-                getLogger().warning("Invalid particle filter specified in config.");
-            }
-
-            if(filter.equalsIgnoreCase("exclude")){
-                List<String> excludedParticles = getConfig().getStringList("settings.pet.particle.filter.exclude");
-                particles = Arrays.stream(org.bukkit.Particle.values()).filter(particle ->
-                        !excludedParticles.contains(particle.name())).collect(Collectors.toList());
-            } else {
-                List<String> includedParticles = getConfig().getStringList("settings.pet.particle.filter.include");
-                particles = Arrays.stream(org.bukkit.Particle.values()).filter(particle ->
-                        includedParticles.contains(particle.name())).collect(Collectors.toList());
-            }
-
-        } else {
-            particles = Arrays.stream(org.bukkit.Particle.values()).collect(Collectors.toList());
-        }
-
-        List<ParticleInfo> particleInfos = new ArrayList<>();
-
-        ConfigurationSection displaySection = getConfig().getConfigurationSection("settings.pet.particle.display");
-        if(displaySection == null)
-            return new ArrayList<>();
-
-        for(org.bukkit.Particle part : particles) {
-            String materialStr = displaySection.getString(part.name().toLowerCase());
-            particleInfos.add(ParticleInfo.builder().particle(part).material(materialStr == null ?
-                    Material.REDSTONE : Material.getMaterial(materialStr)).build());
-        }
-
-        return particleInfos;
     }
 
     public boolean isPet(LivingEntity entity){

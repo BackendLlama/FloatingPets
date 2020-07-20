@@ -125,6 +125,12 @@ locale:
             killed:
                 - "%display_name% was killed by %killer%"
                 - "%display_name% was slain by %killer%"
+    skills:
+        max_health: "Max Health Skill"
+        attack_damage: "Attack Damage Skill"
+        beacon: "Beacon Skill"
+        attack_speed: "Attack Speed Skill"
+        storage: "Storage skill"
     cooldown:
         timeout: "&cYou can use this again in %time% seconds."
     format:
@@ -133,4 +139,6 @@ locale:
         name: "&3%type%"
     shop:
         no_afford: "&cYou can't afford that."
-        bought: "&7You bought a &3%type% &7for &3%price%"
+        bought: "&7You bought a &3%type% &7for &3%price% %currency_symbol%"
+    skill:
+        bought: "&7You bought &3%skull% &7for &3%price% %currency_symbol%"

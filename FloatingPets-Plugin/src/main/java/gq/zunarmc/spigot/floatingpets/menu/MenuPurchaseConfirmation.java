@@ -1,20 +1,20 @@
 package gq.zunarmc.spigot.floatingpets.menu;
 
-import gq.zunarmc.spigot.floatingpets.util.ItemBuilder;
+import gq.zunarmc.spigot.floatingpets.Constants;
 import gq.zunarmc.spigot.floatingpets.FloatingPets;
+import gq.zunarmc.spigot.floatingpets.api.model.Pet;
+import gq.zunarmc.spigot.floatingpets.api.model.PetType;
+import gq.zunarmc.spigot.floatingpets.api.model.Setting;
 import gq.zunarmc.spigot.floatingpets.locale.Locale;
 import gq.zunarmc.spigot.floatingpets.menu.model.Menu;
 import gq.zunarmc.spigot.floatingpets.menu.model.MenuItem;
 import gq.zunarmc.spigot.floatingpets.menu.model.MenuItemRepository;
-import gq.zunarmc.spigot.floatingpets.api.model.Pet;
-import gq.zunarmc.spigot.floatingpets.api.model.PetType;
-import gq.zunarmc.spigot.floatingpets.api.model.Setting;
 import gq.zunarmc.spigot.floatingpets.model.pet.IPet;
+import gq.zunarmc.spigot.floatingpets.util.ItemBuilder;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-import java.text.DecimalFormat;
 import java.util.UUID;
 
 public class MenuPurchaseConfirmation extends Menu {
@@ -61,7 +61,7 @@ public class MenuPurchaseConfirmation extends Menu {
                 plugin.getLocale().send(player, "shop.bought",
                         true, new Locale.Placeholder("type", type.getName()),
                         new Locale.Placeholder("price",
-                                new DecimalFormat("#").format(type.getPrice())),
+                                Constants.DEFAULT_DECIMAL_FORMAT.format(type.getPrice())),
                         new Locale.Placeholder("currency_symbol",
                                 plugin.getStringSetting(Setting.PET_SHOP_FORMAT_CURRENCY)));
 

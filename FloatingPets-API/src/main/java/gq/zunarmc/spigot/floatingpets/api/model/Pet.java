@@ -4,6 +4,8 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface Pet {
@@ -31,6 +33,10 @@ public interface Pet {
     Player getOnlineOwner();
 
     Location getLocation();
+
+    List<Skill> getSkills();
+
+    Optional<Skill> getSkillOfType(Skill.Type type);
 
     void remove();
 

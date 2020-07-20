@@ -1,9 +1,6 @@
 package gq.zunarmc.spigot.floatingpets.model.pet;
 
-import gq.zunarmc.spigot.floatingpets.api.model.FloatingPet;
-import gq.zunarmc.spigot.floatingpets.api.model.Particle;
-import gq.zunarmc.spigot.floatingpets.api.model.Pet;
-import gq.zunarmc.spigot.floatingpets.api.model.PetType;
+import gq.zunarmc.spigot.floatingpets.api.model.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +9,8 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Builder
@@ -25,6 +24,8 @@ public class IPet implements Pet {
     private final UUID owner;
     @Getter
     private final PetType type;
+    @Getter
+    private final List<Skill> skills;
     @Getter @Setter
     private FloatingPet entity;
     @Getter @Setter
@@ -109,6 +110,13 @@ public class IPet implements Pet {
     @Override
     public Location getLocation() {
         return getEntity().getEntity().getLocation();
+    }
+
+    @Override
+    public Optional<Skill> getSkillOfType(Skill.Type type) {
+        return skills.stream()
+                .filter(skill -> skill.getType() == type)
+                .findAny();
     }
 
 }

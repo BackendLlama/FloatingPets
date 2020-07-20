@@ -5,8 +5,11 @@ import gq.zunarmc.spigot.floatingpets.FloatingPets;
 import gq.zunarmc.spigot.floatingpets.api.model.Pet;
 import gq.zunarmc.spigot.floatingpets.api.model.PetType;
 import gq.zunarmc.spigot.floatingpets.api.model.Setting;
+import gq.zunarmc.spigot.floatingpets.api.model.Skill;
 import gq.zunarmc.spigot.floatingpets.locale.Locale;
 import gq.zunarmc.spigot.floatingpets.menu.MenuPetSpecification;
+import gq.zunarmc.spigot.floatingpets.model.skill.AttributeSkill;
+import gq.zunarmc.spigot.floatingpets.model.skill.BeaconSkill;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -32,7 +35,7 @@ public final class Utility {
         String format = plugin.getStringSetting(Setting.PET_NAME_FORMAT);
 
         format = plugin.getLocale().transformPlaceholders(format,
-                new Locale.Placeholder("health", new DecimalFormat("#.#").format(pet.getEntity().getEntityHealth())));
+                new Locale.Placeholder("health", Constants.DEFAULT_DECIMAL_FORMAT.format(pet.getEntity().getEntityHealth())));
 
         // format = format.replace("{health}", new DecimalFormat("#.#").format(pet.getEntity().getEntityHealth()));
         format = plugin.getLocale().color(format);
@@ -141,6 +144,30 @@ public final class Utility {
         }
 
         return limit;
+    }
+
+    public static Skill deserializeSkill(String serialized){
+
+        String[] data = serialized.split(":");
+        Skill.Type type = Skill.Type.valueOf(data[0]);
+        int level       = Integer.parseInt(data[1]);
+
+        return getSkillFromType(type, level);
+
+    }
+
+    public static Skill getSkillFromType(Skill.Type type, int level){
+        switch (type.getImplementation()){
+            case ATTRIBUTE:{
+                return new AttributeSkill(type, level);
+            }
+
+            case BEACON:{
+                return new BeaconSkill(type, level);
+            }
+        }
+
+        return null;
     }
 
 }

@@ -30,6 +30,99 @@ settings:
                 default: 2
                 vip: 4
                 mvp: 8
+        skills:
+            enabled: true
+            type_specific: false
+            types:
+                max_health:
+                    enabled: true
+                    display: RED_DYE
+                    levels:
+                        1:
+                            value: 20
+                            cost: 500
+                        2:
+                            value: 25
+                            cost: 1000
+                        3:
+                            value: 30
+                            cost: 1500
+                        4:
+                            value: 35
+                            cost: 5000
+                        5:
+                            value: 40
+                            cost: 12500
+                attack_damage:
+                    enabled: true
+                    display: IRON_SWORD
+                    levels:
+                        1:
+                            value: 4
+                            cost: 200
+                        2:
+                            value: 6.5
+                            cost: 200
+                        3:
+                            value: 8
+                            cost: 1000
+                        4:
+                            value: 10
+                            cost: 5000
+                        5:
+                            value: 12.5
+                            cost: 10000
+                beacon:
+                    enabled: true
+                    display: BEACON
+                    levels:
+                        1:
+                            value:
+                                - "JUMP_BOOST:1"
+                            cost: 10000
+                        2:
+                            value:
+                                - "JUMP_BOOST:1"
+                                - "SPEED:1"
+                            cost: 20000
+                        3:
+                            value:
+                                - "JUMP_BOOST:1"
+                                - "SPEED:1"
+                                - "REGENERATION:1"
+                            cost: 40000
+                        4:
+                            value:
+                                - "JUMP_BOOST:1"
+                                - "SPEED:1"
+                                - "REGENERATION:1"
+                                - "STRENGTH:1"
+                            cost: 60000
+                storage:
+                    enabled: true
+                    display: CHEST
+                    levels:
+                        1:
+                            value: 1
+                            cost: 500
+                        2:
+                            value: 3
+                            cost: 2000
+                        3:
+                            value: 9
+                            cost: 5000
+                        4:
+                            value: 12
+                            cost: 7500
+                        5:
+                            value: 18
+                            cost: 15000
+            default:
+                health: 20
+                max_health: 20
+                attack_damage: 4
+                attack_speed: 2
+                movement_speed: 1
         shop:
             enabled: false
             options:

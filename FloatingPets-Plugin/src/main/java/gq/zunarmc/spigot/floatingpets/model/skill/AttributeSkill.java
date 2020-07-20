@@ -1,4 +1,4 @@
-package gq.zunarmc.spigot.floatingpets.model.pet;
+package gq.zunarmc.spigot.floatingpets.model.skill;
 
 import gq.zunarmc.spigot.floatingpets.api.model.Pet;
 import gq.zunarmc.spigot.floatingpets.api.model.Skill;
