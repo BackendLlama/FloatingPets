@@ -24,6 +24,18 @@ settings:
                 max_pools: 8
     pet:
         spawn_on_join: true
+        higher_pet: false
+        categories:
+            enabled: false
+            types:
+                combat:
+                    name: "Combat"
+                    item: PLAYER_HEAD
+                    texture: "http://textures.minecraft.net/texture/5dcea1c34174718af2c0ee003ebeaf08840721ccda01e3e6d40d303ff86d93e1"
+                farming:
+                    name: "Farming"
+                    item: PLAYER_HEAD
+                    texture: "http://textures.minecraft.net/texture/5dcea1c34174718af2c0ee003ebeaf08840721ccda01e3e6d40d303ff86d93e1"
         multiple_pets:
             enabled: false
             limits:
@@ -140,7 +152,7 @@ settings:
                     mvp: 10
         name:
             format: "%name% &c(%health% HP)"
-            default_name: "%owner%'s pet"
+            default_name: "%owner%'s %type% pet"
             custom:
                 enabled: true
                 colors: true

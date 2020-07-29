@@ -19,7 +19,8 @@ create table fp_type (
     uniqueId text not null,
     name     text not null,
     texture  text not null,
-    price    text not null
+    price    text not null,
+    category text not_null,
 );
 create table fp_misc (
     recordId int auto_increment

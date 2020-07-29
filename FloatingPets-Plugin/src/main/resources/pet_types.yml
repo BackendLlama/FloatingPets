@@ -1,10 +1,12 @@
 types:
     ebd3c4f0-32a6-4246-b357-e1f723c62f88:
         name: "Monkey"
+        category: "combat"
         texture: "http://textures.minecraft.net/texture/5dcea1c34174718af2c0ee003ebeaf08840721ccda01e3e6d40d303ff86d93e1"
         price: 200
     ddc5d114-7e42-4040-b713-1e0073b60e86:
         name: "Bacon"
+        category: "farming"
         texture: "http://textures.minecraft.net/texture/e7ba22d5df21e821a6de4b8c9d373a3aa187d8ae74f288a82d2b61f272e5"
     3996d090-b591-4ca9-b971-b1a480019fdc:
         name: "Elephant"

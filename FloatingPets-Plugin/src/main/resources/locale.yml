@@ -12,6 +12,8 @@ locale:
         selector:
             title: "Select your pet"
             item: "&3%type%"
+        category:
+            title: "Categories"
         specification:
             title: "Specify pet"
         purchase-confirmation:
@@ -117,6 +119,8 @@ locale:
             called-off: "&7Called off any targets."
         removeall:
             removed: "&7Removed all pets with applicable metadata and entity type."
+        reload:
+            reloaded: "&7Successfully reloaded configuration and storage files."
     pet:
         died: "&cYour %type% pet died."
         death-messages:

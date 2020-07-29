@@ -1,6 +1,6 @@
 name: "FloatingPets"
 version: "2.4.0"
-main: gq.zunarmc.spigot.floatingpets.FloatingPets
+main: net.llamasoftware.spigot.floatingpets.FloatingPets
 api-version: "1.15"
 softdepend: [Vault, ProtocolLib, LightAPI, WorldGuard, PlaceholderAPI, Common]
 author: "Llama Software, frm Proxenus"

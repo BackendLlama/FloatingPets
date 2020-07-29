@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <parent>
-        <groupId>gq.zunarmc.spigot</groupId>
+        <groupId>net.llamasoftware.spigot</groupId>
         <artifactId>floatingpets</artifactId>
         <version>2.4.0-SNAPSHOT</version>
     </parent>
@@ -49,18 +49,18 @@
 
     <dependencies>
         <dependency>
-            <groupId>gq.zunarmc.spigot</groupId>
+            <groupId>net.llamasoftware.spigot</groupId>
             <artifactId>floatingpets-api</artifactId>
             <version>2.4.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
-            <groupId>gq.zunarmc.spigot</groupId>
+            <groupId>net.llamasoftware.spigot</groupId>
             <artifactId>floatingpets-v1_15_R1</artifactId>
             <version>2.4.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>gq.zunarmc.spigot</groupId>
+            <groupId>net.llamasoftware.spigot</groupId>
             <artifactId>floatingpets-v1_16_R1</artifactId>
             <version>2.4.0-SNAPSHOT</version>
         </dependency>
@@ -135,7 +135,7 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>2.3.1</version>
                 <configuration>
-                    <outputDirectory>../dev-server/plugins</outputDirectory>
+                    <outputDirectory>\\192.168.1.7\sambashare\Servers\Dev\1.16.1\plugins</outputDirectory>
                 </configuration>
             </plugin>
             <plugin>
@@ -151,8 +151,8 @@
                         <configuration>
                             <artifactSet>
                                 <includes>
-                                    <include>gq.zunarmc.spigot:*:*:*</include>
-                                    <include>gq.zunarmc.spigot.menu:*:*:*</include>
+                                    <include>net.llamasoftware.spigot:*:*:*</include>
+                                    <include>net.llamasoftware.spigot.menu:*:*:*</include>
                                     <include>com.zaxxer:*:*:*</include>
                                     <include>io.github.bananapuncher714</include>
                                 </includes>
