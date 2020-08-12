@@ -31,13 +31,14 @@ public class MenuListener implements Listener {
             return;
         }
 
-        event.setCancelled(true);
+        if(!openedMenu.isModifiable())
+            event.setCancelled(true);
 
         ItemStack clickedItem = event.getCurrentItem();
         if(clickedItem == null)
             return;
 
-        Optional<MenuItem> menuItem = openedMenu.getItemByStack(clickedItem, event.getSlot());
+        Optional<MenuItem> menuItem = openedMenu.getItemByStack(event.getSlot());
 
         if(!menuItem.isPresent()) {
             return;
@@ -57,6 +58,8 @@ public class MenuListener implements Listener {
         Menu menu = plugin.getMenuManager().getOpenedMenu(player.getUniqueId());
         if(menu == null)
             return;
+
+        menu.onClose(player);
 
         plugin.getMenuManager().clearMenu(player.getUniqueId());
 

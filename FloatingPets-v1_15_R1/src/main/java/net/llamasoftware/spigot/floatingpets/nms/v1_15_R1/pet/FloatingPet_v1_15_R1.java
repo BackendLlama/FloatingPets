@@ -85,11 +85,6 @@ public class FloatingPet_v1_15_R1 extends EntityCat implements FloatingPet {
         setInvisible(true);
         H = 1;
 
-        this.getAttributeInstance(GenericAttributes.MAX_HEALTH)
-                .setValue(Double.parseDouble(settings.get(Setting.PET_MAX_HEALTH)));
-
-        setHealth((float) Double.parseDouble(settings.get(Setting.PET_DEFAULT_HEALTH)));
-
         addEffect(new MobEffect(MobEffects.INVISIBILITY,
                 Integer.MAX_VALUE, 1, false, false));
 

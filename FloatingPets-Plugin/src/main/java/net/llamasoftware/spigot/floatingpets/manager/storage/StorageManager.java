@@ -73,9 +73,12 @@ public abstract class StorageManager {
         Pet pet = IPet.builder()
                 .uniqueId(UUID.randomUUID())
                 .name(plugin.getLocale().transformPlaceholders(plugin.getStringSetting(Setting.PET_NAME_DEFAULT_NAME),
-                        new Locale.Placeholder("owner", player.getName())))
+                        new Locale.Placeholder("owner", player.getName()),
+                        new Locale.Placeholder("type", type.getName())))
                 .owner(player.getUniqueId())
                 .type(type)
+                .skills(new ArrayList<>())
+                .extra(new HashMap<>())
                 .build();
 
         storePet(pet, true);
@@ -138,7 +141,8 @@ public abstract class StorageManager {
     public enum Action {
         RENAME,
         REMOVE,
-        PARTICLE
+        PARTICLE,
+        SKILL, EXTRA;
     }
 
 }

@@ -67,6 +67,7 @@ public enum Setting {
 
     PET_HAT_COSMETIC("pet.hat.cosmetic.enabled"),
     PET_LIGHT_COSMETIC("pet.light.cosmetic.enabled"),
+    PET_SKILLS("pet.skills.enabled"),
 
     PET_PARTICLE_FILTER("pet.particle.filter.enabled"),
     PET_PARTICLE("pet.particle.enabled"),

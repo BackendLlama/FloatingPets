@@ -6,20 +6,16 @@ import net.llamasoftware.spigot.floatingpets.command.CommandInfo;
 import net.llamasoftware.spigot.floatingpets.locale.Locale;
 import net.llamasoftware.spigot.floatingpets.manager.storage.StorageManager;
 import net.llamasoftware.spigot.floatingpets.menu.MenuCategoryList;
-import net.llamasoftware.spigot.floatingpets.menu.MenuPetSelector;
 import net.llamasoftware.spigot.floatingpets.menu.MenuPurchaseConfirmation;
 import net.llamasoftware.spigot.floatingpets.api.model.Pet;
 import net.llamasoftware.spigot.floatingpets.api.model.PetType;
 import net.llamasoftware.spigot.floatingpets.api.model.Setting;
 import net.llamasoftware.spigot.floatingpets.model.misc.Cooldown;
-import net.llamasoftware.spigot.floatingpets.model.pet.IPet;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 @CommandInfo(name = "select", inGame = true, petContext = false)
 public class CommandSelect extends Command {
@@ -49,7 +45,7 @@ public class CommandSelect extends Command {
         }
 
         if(!plugin.isSetting(Setting.MULTIPLE_PETS)
-                && !plugin.getPetManager().getPetByOwner(player).isEmpty()) {
+                && !plugin.getPetManager().getPetsByOwner(player).isEmpty()) {
 
             Pet currentPet = currentPets.get(0);
             locale.send(player, "commands.select.removed-current", true);
@@ -74,12 +70,15 @@ public class CommandSelect extends Command {
         if(arguments.length == 0){
 
             if(plugin.getConfig().contains("settings.pet.categories.enabled") &&
-                    !plugin.getConfig().getBoolean("settings.pet.categories.enabled")) {
+                    plugin.getConfig().getBoolean("settings.pet.categories.enabled") &&
+                    !(plugin.getSettingManager().getCategories().size() < 2)) {
 
-                plugin.getMenuManager().openMenu(player, new MenuCategoryList(plugin.getStorageManager().getLocaleByKey("menus.category.title"),
+                plugin.getMenuManager().openMenu(player, new MenuCategoryList(plugin.getStorageManager()
+                        .getLocaleByKey("menus.category.title"),
                         plugin.getSettingManager().getCategories()), plugin);
             } else {
-                plugin.getMenuManager().openPetSelector(player, plugin.getSettingManager().getCategoryById("default").orElse(null));
+                plugin.getMenuManager().openPetSelector(player,
+                        plugin.getSettingManager().getCategoryById("default").orElse(null));
             }
         } else {
             Optional<PetType> type = plugin.getStorageManager().getTypeByName(arguments[0]);
@@ -101,7 +100,6 @@ public class CommandSelect extends Command {
                 locale.send(player, "commands.select.removed-current", true);
                 plugin.getPetManager().despawnPet(current.get());
                 plugin.getStorageManager().updatePet(current.get(), StorageManager.Action.REMOVE);
-                return;
             }
 
             if(plugin.isSetting(Setting.PET_SHOP_ENABLED) && type.get().getPrice() > 0){

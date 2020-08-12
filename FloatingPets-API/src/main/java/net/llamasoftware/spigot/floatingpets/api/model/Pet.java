@@ -5,6 +5,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -59,5 +60,11 @@ public interface Pet {
     void stopRiding(Entity entity);
 
     boolean isRiding(Entity entity);
+
+    Map<String, Object> getExtra();
+
+    void setExtra(String key, Object object);
+
+    Object getExtra(String key);
 
 }

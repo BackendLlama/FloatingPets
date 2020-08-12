@@ -9,9 +9,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Builder
 public class IPet implements Pet {
@@ -34,6 +32,7 @@ public class IPet implements Pet {
     private Particle particle;
     @Getter @Setter
     private boolean light;
+    private Map<String, Object> extra;
 
     @Override
     public void remove() {
@@ -98,6 +97,24 @@ public class IPet implements Pet {
     }
 
     @Override
+    public Map<String, Object> getExtra() {
+        return extra;
+    }
+
+    @Override
+    public void setExtra(String key, Object object) {
+        if(extra == null)
+            extra = new HashMap<>();
+
+        extra.put(key, object);
+    }
+
+    @Override
+    public Object getExtra(String key) {
+        return extra.get(key);
+    }
+
+    @Override
     public boolean hasParticle() {
         return getParticle() != null;
     }
@@ -114,7 +131,11 @@ public class IPet implements Pet {
 
     @Override
     public Optional<Skill> getSkillOfType(Skill.Type type) {
+        if(skills == null)
+            return Optional.empty();
+
         return skills.stream()
+                .filter(Objects::nonNull)
                 .filter(skill -> skill.getType() == type)
                 .findAny();
     }

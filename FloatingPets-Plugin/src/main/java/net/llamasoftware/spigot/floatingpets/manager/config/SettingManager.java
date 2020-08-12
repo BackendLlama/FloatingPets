@@ -39,7 +39,8 @@ public class SettingManager {
     private List<PetCategory> loadCategories() {
 
         List<PetCategory> categories = new ArrayList<>();
-        categories.add(PetCategory.builder().id("default").name("default").displayItem(null).build());
+
+        addCategoryById(categories, "default");
 
         if(!config.contains("settings.pet.categories.enabled")
                 || !config.getBoolean("settings.pet.categories.enabled"))
@@ -51,24 +52,35 @@ public class SettingManager {
             return categories;
 
         for (String id : section.getKeys(false)) {
-            String name = section.getString(id + ".name");
-            Material material = Material.getMaterial(Objects.requireNonNull(section.getString(id + ".item")));
-
-            if(material == null)
-                continue;
-
-            ItemStack stack;
-            if(material == Material.PLAYER_HEAD){
-                stack = plugin.getNmsHelper().getItemStackFromTexture(section.getString(id + ".texture"));
-            } else {
-                stack = new ItemStack(material);
-            }
-
-            categories.add(PetCategory.builder().id(id).name(name).displayItem(stack).build());
+            addCategoryById(categories, id);
         }
 
         return categories;
 
+    }
+
+    private void addCategoryById(List<PetCategory> list, String id){
+        ConfigurationSection section = config.getConfigurationSection("settings.pet.categories.types");
+        if(section == null)
+            return;
+
+        String name = section.getString(id + ".name");
+        Material material = Material.getMaterial(Objects.requireNonNull(section.getString(id + ".item")));
+
+        if(material == null)
+            return;
+
+        ItemStack stack;
+        if(material == Material.PLAYER_HEAD){
+            stack = plugin.getNmsHelper().getItemStackFromTexture(section.getString(id + ".texture"));
+        } else {
+            stack = new ItemStack(material);
+        }
+
+        PetCategory category = PetCategory.builder().id(id).name(name).displayItem(stack).build();
+        if (list.stream().noneMatch(ca -> ca.getId().equals(category.getId()))) {
+            list.add(category);
+        }
     }
 
     private List<ParticleInfo> loadEnabledParticles(){
@@ -142,7 +154,7 @@ public class SettingManager {
             if(levelSection == null)
                 continue;
 
-            List<SkillLevel> levels = new ArrayList<>();
+            LinkedList<SkillLevel> levels = new LinkedList<>();
             for (String levelSectionKey : levelSection.getKeys(false)) {
                 int i = Integer.parseInt(levelSectionKey);
                 Object value = levelSection.get(levelSectionKey + ".value");
@@ -171,6 +183,12 @@ public class SettingManager {
     public Optional<PetCategory> getCategoryById(String id) {
         return categories.stream()
                 .filter(category -> category.getId().equals(id))
+                .findAny();
+    }
+
+    public Optional<SkillCategory> getCategoryByType(Skill.Type type) {
+        return skillCategories.stream()
+                .filter(skillCategory -> skillCategory.getType() == type)
                 .findAny();
     }
 

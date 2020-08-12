@@ -29,6 +29,19 @@ locale:
             speed-normal: "&3Normal"
             speed-fast: "&3Fast"
             speed-fastest: "&3Fastest"
+        skill-list:
+            item: "&3%skill%"
+            lore:
+                - " "
+                - "&e* &7Click to buy for &3%price% %currency_symbol%"
+                - " "
+            lore-bought:
+                - " "
+                - "&7Level: &3%level%"
+                - " "
+                - "&e* &7Click to upgrade for &3%price% %currency_symbol%"
+                - " "
+            max-level: " &c(MAX)"
     commands:
         help:
             index:
@@ -121,14 +134,16 @@ locale:
             removed: "&7Removed all pets with applicable metadata and entity type."
         reload:
             reloaded: "&7Successfully reloaded configuration and storage files."
+        skill:
+            no-skills: "&cYou don't have permission to use any skills."
+        admin:
+            remove:
+                syntax: "&cSyntax: /pet admin remove <player> <type>"
+                invalid: "&cPlayer doesn't have a pet with that type."
+                removed: "&7Removed &3%player%'s %type%&7 pet."
     pet:
         died: "&cYour %type% pet died."
-        death-messages:
-            general:
-                - "%display_name% died"
-            killed:
-                - "%display_name% was killed by %killer%"
-                - "%display_name% was slain by %killer%"
+        killed: "&cYour %type% pet was killed by %killer%."
     skills:
         max_health: "Max Health Skill"
         attack_damage: "Attack Damage Skill"
@@ -145,4 +160,4 @@ locale:
         no_afford: "&cYou can't afford that."
         bought: "&7You bought a &3%type% &7for &3%price% %currency_symbol%"
     skill:
-        bought: "&7You bought &3%skull% &7for &3%price% %currency_symbol%"
+        bought: "&7You bought &3%skill% %level% &7for &3%price% %currency_symbol%"

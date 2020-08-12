@@ -1,11 +1,11 @@
 package net.llamasoftware.spigot.floatingpets.model.misc;
 
-import net.llamasoftware.spigot.floatingpets.api.model.Skill;
 import lombok.Builder;
 import lombok.Getter;
+import net.llamasoftware.spigot.floatingpets.api.model.Skill;
 import org.bukkit.Material;
 
-import java.util.List;
+import java.util.LinkedList;
 
 @Builder
 public class SkillCategory {
@@ -15,6 +15,6 @@ public class SkillCategory {
     @Getter
     private final Material displayItem;
     @Getter
-    private final List<SkillLevel> levels;
+    private final LinkedList<SkillLevel> levels;
 
 }

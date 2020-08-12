@@ -6,12 +6,15 @@ import net.llamasoftware.spigot.floatingpets.api.model.FloatingPet;
 import net.llamasoftware.spigot.floatingpets.api.model.Pet;
 import net.llamasoftware.spigot.floatingpets.api.model.Setting;
 import net.llamasoftware.spigot.floatingpets.locale.Locale;
+import net.llamasoftware.spigot.floatingpets.model.skill.AttributeSkill;
 import net.llamasoftware.spigot.floatingpets.task.PetHealthRegenerationTask;
 import net.llamasoftware.spigot.floatingpets.task.PetTickTask;
 import net.llamasoftware.spigot.floatingpets.util.NBTEditor;
 import lombok.Getter;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -38,7 +41,7 @@ public class PetManager {
             return;
 
         if(!plugin.isSetting(Setting.MULTIPLE_PETS)) {
-            List<Pet> previous = getPetByOwner(onlineOwner);
+            List<Pet> previous = getPetsByOwner(onlineOwner);
             if(!previous.isEmpty())
                 despawnPet(previous.get(0));
         }
@@ -79,6 +82,18 @@ public class PetManager {
         pet.setNameTag(nameTag);
         pet.setEntity(floatingPet);
         pet.attachNameTag();
+
+        pet.getEntity().getEntity()
+                .setHealth(Double.parseDouble(plugin.getStringSetting(Setting.PET_DEFAULT_HEALTH)));
+
+        AttributeInstance attribute = pet.getEntity().getEntity().getAttribute(Attribute.GENERIC_MAX_HEALTH);
+        if(attribute != null) {
+            attribute.setBaseValue(Double.parseDouble(plugin.getStringSetting(Setting.PET_MAX_HEALTH)));
+        }
+
+        pet.getSkills().stream()
+                .filter(skill -> skill instanceof AttributeSkill)
+                .forEach(skill -> skill.applySkill(pet));
 
         NBTEditor.set(pet.getEntity().getEntity(), 1, "FPComponent");
         NBTEditor.set(nameTag, 1, "FPComponent");
@@ -123,7 +138,7 @@ public class PetManager {
         return activePets.contains(pet) && pet.isAlive();
     }
 
-    public LinkedList<Pet> getPetByOwner(Player player){
+    public LinkedList<Pet> getPetsByOwner(Player player){
         return activePets.stream()
                 .filter(pet -> pet.getOnlineOwner() != null
                         && pet.getOnlineOwner().getUniqueId().equals(player.getUniqueId()))

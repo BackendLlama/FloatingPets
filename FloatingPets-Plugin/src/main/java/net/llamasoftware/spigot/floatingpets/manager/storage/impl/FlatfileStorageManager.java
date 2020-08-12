@@ -126,7 +126,7 @@ public class FlatfileStorageManager extends StorageManager {
 
             List<Skill> skills = petSection.getStringList("skills")
                     .stream()
-                    .map(Utility::deserializeSkill)
+                    .map(s -> Utility.deserializeSkill(s, plugin))
                     .collect(Collectors.toList());
 
             IPet.IPetBuilder petBuilder = IPet.builder()
@@ -143,6 +143,20 @@ public class FlatfileStorageManager extends StorageManager {
 
                 petParticle = new IParticle(particle, speed, plugin);
                 petBuilder.particle(petParticle);
+            }
+
+            Map<String, Object> extraMap = new HashMap<>();
+
+            if(petSection.contains("extra")){
+                ConfigurationSection extra = petSection.getConfigurationSection("extra");
+                if(extra == null)
+                    return;
+
+                for (String key : extra.getKeys(false)) {
+                    extraMap.put(key, petSection.get("extra." + key));
+                }
+
+                petBuilder.extra(extraMap);
             }
 
             Pet pet = petBuilder.build();
@@ -178,6 +192,8 @@ public class FlatfileStorageManager extends StorageManager {
             } else {
                 typeBuilder.category(defaultCategory);
             }
+            
+            cachedTypes.add(typeBuilder.build());
         }
 
         plugin.getLogger().info("  Successfully loaded " + cachedTypes.size() + " pet type(s)");
@@ -210,11 +226,18 @@ public class FlatfileStorageManager extends StorageManager {
             petStorageSection.set("owner", pet.getOwner().toString());
             petStorageSection.set("type", pet.getType().getUniqueId().toString());
             petStorageSection.set("name", pet.getName());
+            petStorageSection.set("skills", pet.getSkills().stream()
+                    .map(Utility::serializeSkill).collect(Collectors.toList()));
+
+            if(pet.getExtra() != null) {
+                pet.getExtra().forEach((key, value) -> petStorageSection.set("extra." + key, value));
+            }
 
             if(pet.hasParticle()){
                 petStorageSection.set("particle.type", pet.getParticle().getParticle().name());
                 petStorageSection.set("particle.speed", pet.getParticle().getSpeed());
             }
+
 
             petDataFile.save();
         }
@@ -234,6 +257,18 @@ public class FlatfileStorageManager extends StorageManager {
 
             case RENAME:{
                 updateValue(pet, "name", pet.getName());
+                break;
+            }
+
+            case SKILL:{
+                updateValue(pet, "skills", pet.getSkills().stream()
+                        .map(Utility::serializeSkill).collect(Collectors.toList()));
+                break;
+            }
+
+            case EXTRA:{
+                pet.getExtra().forEach((key, value) -> updateValue(pet, "extra." + key, value));
+
                 break;
             }
 

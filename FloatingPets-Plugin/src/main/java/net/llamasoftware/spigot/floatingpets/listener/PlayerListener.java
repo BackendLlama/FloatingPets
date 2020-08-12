@@ -3,7 +3,10 @@ package net.llamasoftware.spigot.floatingpets.listener;
 import net.llamasoftware.spigot.floatingpets.FloatingPets;
 import net.llamasoftware.spigot.floatingpets.api.model.Pet;
 import net.llamasoftware.spigot.floatingpets.api.model.Setting;
+import net.llamasoftware.spigot.floatingpets.api.model.Skill;
+import net.llamasoftware.spigot.floatingpets.menu.MenuPetStorage;
 import net.llamasoftware.spigot.floatingpets.model.misc.Food;
+import net.llamasoftware.spigot.floatingpets.model.skill.StorageSkill;
 import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
@@ -94,7 +97,14 @@ public class PlayerListener implements Listener {
             }
 
         } else if(!foodItem.isPresent()){
-            // TODO Pet menu
+            if(player.isSneaking()){
+                Optional<Skill> skill = pet.get().getSkillOfType(Skill.Type.STORAGE);
+                if(skill.isPresent()) {
+                    StorageSkill storageSkill = (StorageSkill) skill.get();
+                    plugin.getMenuManager().openMenu(player, new MenuPetStorage("Pet Storage",
+                            storageSkill.getRows(), pet.get()), plugin);
+                }
+            }
         }
 
     }
@@ -102,7 +112,7 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onPlayerChangedWorld(PlayerChangedWorldEvent event){
 
-        List<Pet> pets = plugin.getPetManager().getPetByOwner(event.getPlayer());
+        List<Pet> pets = plugin.getPetManager().getPetsByOwner(event.getPlayer());
         for(Pet pet : pets) {
             Player player = event.getPlayer();
 

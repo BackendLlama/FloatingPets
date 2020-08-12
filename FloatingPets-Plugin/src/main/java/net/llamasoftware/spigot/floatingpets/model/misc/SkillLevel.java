@@ -18,7 +18,12 @@ public class SkillLevel {
     private final Object value;
 
     public Skill getSkill(){
-        return Utility.getSkillFromType(type, level);
+        Skill skill = Utility.getSkillFromType(type, level);
+
+        if(skill != null)
+            skill.parse(value);
+
+        return skill;
     }
 
 }

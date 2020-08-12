@@ -2,24 +2,29 @@ package net.llamasoftware.spigot.floatingpets.listener;
 
 import net.llamasoftware.spigot.floatingpets.Constants;
 import net.llamasoftware.spigot.floatingpets.FloatingPets;
-import net.llamasoftware.spigot.floatingpets.locale.Locale;
-import net.llamasoftware.spigot.floatingpets.manager.storage.StorageManager;
 import net.llamasoftware.spigot.floatingpets.api.model.Pet;
 import net.llamasoftware.spigot.floatingpets.api.model.Setting;
+import net.llamasoftware.spigot.floatingpets.api.model.Skill;
+import net.llamasoftware.spigot.floatingpets.locale.Locale;
+import net.llamasoftware.spigot.floatingpets.manager.storage.StorageManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Particle;
 import org.bukkit.World;
-import org.bukkit.entity.*;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class EntityListener implements Listener {
 
@@ -119,20 +124,27 @@ public class EntityListener implements Listener {
             }
         }
 
-        plugin.getLocale().send(pet.get().getOnlineOwner(), "pet.died", false,
-                new Locale.Placeholder("type", pet.get().getType().getName()));
+        Optional<Skill> skill = pet.get().getSkillOfType(Skill.Type.STORAGE);
+        if(skill.isPresent()){
+            @SuppressWarnings("unchecked")
+            List<ItemStack> storage = (List<ItemStack>) pet.get().getExtra("storage");
+            storage.stream()
+                    .filter(Objects::nonNull)
+                    .forEach(itemStack ->
+                            event.getEntity().getWorld().dropItemNaturally(entity.getLocation(), itemStack));
+        }
 
         if(plugin.isSetting(Setting.PET_DEATH_MESSAGES)){
             Player killer = entity.getKiller();
-            if(killer == null)
-                return;
 
-            List<String> deathMessages = plugin.getStorageManager().getLocaleListByKey("pet.death-messages");
-            String message = deathMessages.get(ThreadLocalRandom.current().nextInt(deathMessages.size()));
+            Locale.Placeholder typePlaceholder = new Locale.Placeholder("type", pet.get().getType().getName());
 
-            Bukkit.getOnlinePlayers().forEach(player -> plugin.getLocale().send(player, message,
-                    false, new Locale.Placeholder("display_name", pet.get().getName()),
-                    new Locale.Placeholder("killer", player.getName())));
+            if(killer == null) {
+                plugin.getLocale().send(pet.get().getOnlineOwner(), "pet.died", false, typePlaceholder);
+            } else {
+                plugin.getLocale().send(pet.get().getOnlineOwner(), "pet.killed", false, typePlaceholder,
+                        new Locale.Placeholder("killer", killer.getName()));
+            }
 
         }
 

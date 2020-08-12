@@ -1,15 +1,17 @@
 package net.llamasoftware.spigot.floatingpets.menu.model;
 
-import net.llamasoftware.spigot.floatingpets.FloatingPets;
-import net.llamasoftware.spigot.floatingpets.manager.menu.MenuManager;
 import lombok.Getter;
 import lombok.Setter;
+import net.llamasoftware.spigot.floatingpets.FloatingPets;
+import net.llamasoftware.spigot.floatingpets.manager.menu.MenuManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 
 public abstract class Menu {
 
@@ -17,6 +19,8 @@ public abstract class Menu {
     private String title;
     @Getter @Setter
     private int rows;
+    @Getter @Setter
+    private boolean modifiable;
 
     @Getter
     private MenuManager menuManager;
@@ -28,33 +32,13 @@ public abstract class Menu {
     public Menu(String title, int rows) {
         this.title = title;
         this.rows = rows;
+        this.modifiable = false;
     }
 
-    public Optional<MenuItem> getItemByStack(ItemStack stack, int slot){
+    public Optional<MenuItem> getItemByStack(int slot){
         return getItems().getAll().stream()
-                .filter(item -> isSimilar(stack, item, slot))
+                .filter(menuItem -> menuItem.getSlot() == slot)
                 .findAny();
-    }
-
-    private boolean isSimilar(ItemStack stack, MenuItem other, int slot){
-        if(stack == null || other == null)
-            return false;
-
-        if(other.getSlot() != slot)
-            return false;
-
-        boolean initial = other.getStack().getType() == stack.getType()
-                && other.getStack().getAmount() == stack.getAmount();
-
-        if(!initial)
-            return false;
-
-        if(!(stack.hasItemMeta() && other.getStack().hasItemMeta())){
-            return true;
-        }
-
-        return stack.getItemMeta().hasDisplayName() && other.getStack().getItemMeta().hasDisplayName()
-                && stack.getItemMeta().getDisplayName().equals(other.getStack().getItemMeta().getDisplayName());
     }
 
     public void open(Player player, MenuManager menuManager, FloatingPets plugin){
@@ -65,11 +49,12 @@ public abstract class Menu {
         this.plugin = plugin;
 
         Inventory inventory = Bukkit.createInventory(null, rows * 9, title);
-        getItems().getAll()
-                .forEach(item -> inventory.setItem(item.getSlot(), item.getStack()));
+        getItems().getAll().forEach(item -> inventory.setItem(item.getSlot(), item.getStack()));
 
         player.openInventory(inventory);
     }
+
+    public void onClose(Player player){}
 
     public abstract MenuItemRepository getItems();
 

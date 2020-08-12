@@ -20,9 +20,11 @@ public class MenuPetSpecification extends ListMenu<Pet> {
     @Override
     public ItemStack buildItem(Pet pet) {
         FloatingPets plugin = getPlugin();
-        return new ItemBuilder(plugin.getNmsHelper()
+        ItemStack stack = new ItemBuilder(plugin.getNmsHelper()
                 .getItemStackFromTexture(pet.getType().getTexture()))
                 .name(plugin.getUtility().formatTitle(pet, getData("coloredNames", Boolean.class))).build();
+
+        return stack;
     }
 
     @Override

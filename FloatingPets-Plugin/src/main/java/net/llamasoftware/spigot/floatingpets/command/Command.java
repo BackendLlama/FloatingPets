@@ -26,8 +26,9 @@ public abstract class Command {
     public void handleCommand(CommandSender sender, String[] arguments){
         if (sender instanceof Player && getDeclaration().petContext()) {
             Player player = (Player) sender;
-            LinkedList<Pet> pets = plugin.getStorageManager()
-                    .getPetsByOwner(player.getUniqueId());
+            LinkedList<Pet> pets = getDeclaration().activePets() ?
+                    plugin.getPetManager().getPetsByOwner(player) :
+                    plugin.getStorageManager().getPetsByOwner(player.getUniqueId());
 
             if (pets.isEmpty()) {
                 locale.send(player, "generic.no-pet", false);
@@ -42,6 +43,9 @@ public abstract class Command {
             if (petId == null)
                 return;
 
+            index = arguments.length > 0 && Constants.INTEGER_PATTERN
+                    .matcher(arguments[0]).matches() ? Integer.parseInt(arguments[0]) : 0;
+
             if(index >= pets.size() || index < 0)
                 return;
 
@@ -52,6 +56,7 @@ public abstract class Command {
                 Bukkit.dispatchCommand(player, ind);
                 return;
             }
+
 
             pet = pets.get(index);
         }

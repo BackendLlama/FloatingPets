@@ -1,27 +1,23 @@
 package net.llamasoftware.spigot.floatingpets.manager.storage.impl;
 
 import net.llamasoftware.spigot.floatingpets.FloatingPets;
-import net.llamasoftware.spigot.floatingpets.api.model.PetCategory;
+import net.llamasoftware.spigot.floatingpets.api.model.*;
 import net.llamasoftware.spigot.floatingpets.manager.sql.MySQLManager;
 import net.llamasoftware.spigot.floatingpets.manager.storage.StorageManager;
-import net.llamasoftware.spigot.floatingpets.api.model.Pet;
-import net.llamasoftware.spigot.floatingpets.api.model.PetType;
-import net.llamasoftware.spigot.floatingpets.api.model.Setting;
 import net.llamasoftware.spigot.floatingpets.model.misc.Food;
 import net.llamasoftware.spigot.floatingpets.model.pet.IParticle;
 import net.llamasoftware.spigot.floatingpets.model.pet.IPet;
 import lombok.Builder;
 import lombok.Getter;
+import net.llamasoftware.spigot.floatingpets.util.Utility;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import javax.sql.rowset.CachedRowSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class SQLStorageManager extends StorageManager {
 
@@ -107,6 +103,14 @@ public class SQLStorageManager extends StorageManager {
                             particle.setPlugin(plugin);
                             petBuilder.particle(particle);
                         }
+
+                        List<Skill> skills = Arrays.stream(result.getString("skills").split("---"))
+                                                                            .map(s -> Utility.deserializeSkill(s, plugin))
+                                                                            .collect(Collectors.toList());
+
+                        // TODO Test if this implementation works
+
+                        petBuilder.skills(skills);
 
                         Pet pet = petBuilder.build();
                         storePet(pet, false);
@@ -197,6 +201,7 @@ public class SQLStorageManager extends StorageManager {
                 "    owner    text not null,\n" +
                 "    type     text not null,\n" +
                 "    name     text not null,\n" +
+                "    skills   text not null,\n" +
                 "    particle text not null\n" +
                 ");";
         String typeQuery = "" +
@@ -232,8 +237,11 @@ public class SQLStorageManager extends StorageManager {
 
         if(save){
             String particle = pet.hasParticle() ? plugin.getGson().toJson(pet.getParticle()) : "";
-            mySqlManager.execute("INSERT INTO " + getTable("pet") + " (uniqueId, owner, type, name, particle) VALUES(?, ?, ?, ?, ?)",
-                    pet.getUniqueId().toString(), pet.getOwner().toString(), pet.getType().getUniqueId().toString(), pet.getName(), particle);
+            String skills = pet.getSkills().stream()
+                    .map(Utility::serializeSkill).collect(Collectors.joining("---"));
+
+            mySqlManager.execute("INSERT INTO " + getTable("pet") + " (uniqueId, owner, type, name, particle, skills) VALUES(?, ?, ?, ?, ?, ?)",
+                    pet.getUniqueId().toString(), pet.getOwner().toString(), pet.getType().getUniqueId().toString(), pet.getName(), particle, skills);
         }
 
     }

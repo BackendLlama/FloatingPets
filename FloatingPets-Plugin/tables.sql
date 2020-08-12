@@ -11,6 +11,7 @@ create table fp_pet (
     owner    text not null,
     type     text not null,
     name     text not null,
+    skills   text not_null,
     particle text not null
 );
 create table fp_type (

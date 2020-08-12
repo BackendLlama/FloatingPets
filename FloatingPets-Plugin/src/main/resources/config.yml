@@ -28,6 +28,9 @@ settings:
         categories:
             enabled: false
             types:
+                default:
+                    name: "Pets"
+                    item: GOLD_INGOT
                 combat:
                     name: "Combat"
                     item: PLAYER_HEAD
@@ -51,19 +54,19 @@ settings:
                     display: RED_DYE
                     levels:
                         1:
-                            value: 20
+                            value: 20.0
                             cost: 500
                         2:
-                            value: 25
+                            value: 25.0
                             cost: 1000
                         3:
-                            value: 30
+                            value: 30.0
                             cost: 1500
                         4:
-                            value: 35
+                            value: 35.0
                             cost: 5000
                         5:
-                            value: 40
+                            value: 40.0
                             cost: 12500
                 attack_damage:
                     enabled: true
@@ -90,25 +93,25 @@ settings:
                     levels:
                         1:
                             value:
-                                - "JUMP_BOOST:1"
+                                - "JUMP:1"
                             cost: 10000
                         2:
                             value:
-                                - "JUMP_BOOST:1"
+                                - "JUMP:1"
                                 - "SPEED:1"
                             cost: 20000
                         3:
                             value:
-                                - "JUMP_BOOST:1"
+                                - "JUMP:1"
                                 - "SPEED:1"
                                 - "REGENERATION:1"
                             cost: 40000
                         4:
                             value:
-                                - "JUMP_BOOST:1"
+                                - "JUMP:1"
                                 - "SPEED:1"
                                 - "REGENERATION:1"
-                                - "STRENGTH:1"
+                                - "INCREASE_DAMAGE:1"
                             cost: 60000
                 storage:
                     enabled: true
@@ -118,20 +121,20 @@ settings:
                             value: 1
                             cost: 500
                         2:
-                            value: 3
+                            value: 2
                             cost: 2000
                         3:
-                            value: 9
+                            value: 4
                             cost: 5000
                         4:
-                            value: 12
+                            value: 5
                             cost: 7500
                         5:
-                            value: 18
+                            value: 6
                             cost: 15000
             default:
-                health: 20
-                max_health: 20
+                health: 15
+                max_health: 15
                 attack_damage: 4
                 attack_speed: 2
                 movement_speed: 1
@@ -212,7 +215,6 @@ settings:
                 distance: 20.0
             call:
                 enabled: true
-
         riding:
             enabled: false
             options:

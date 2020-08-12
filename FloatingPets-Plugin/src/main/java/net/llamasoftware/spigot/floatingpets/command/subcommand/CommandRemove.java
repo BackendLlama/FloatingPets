@@ -18,10 +18,8 @@ public class CommandRemove extends Command {
     @Override
     public void onCommand(CommandSender sender, String[] arguments) {
 
-        // TODO remove pet from console
-
-        if (!(sender instanceof Player)) {
-            locale.send(sender, "generic.player-only", false);
+        if(!(sender instanceof Player)){
+            locale.send(sender, "commands.remove.admin-syntax", true);
             return;
         }
 
@@ -29,6 +27,7 @@ public class CommandRemove extends Command {
 
         removePet(pet);
         locale.send(player, "commands.remove.removed", true);
+
     }
 
     private void removePet(Pet pet){

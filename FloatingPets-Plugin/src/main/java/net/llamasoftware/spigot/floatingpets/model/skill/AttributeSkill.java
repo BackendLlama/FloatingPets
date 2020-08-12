@@ -16,8 +16,16 @@ public class AttributeSkill extends Skill {
 
     @Override
     public void parse(Object object) {
-        baseValue = (double) object;
-        attribute = Attribute.valueOf(type.name());
+        double value;
+
+        if(object instanceof Integer){
+            value = ((Integer) object).doubleValue();
+        } else {
+            value = (double) object;
+        }
+
+        baseValue = value;
+        attribute = Attribute.valueOf("GENERIC_" + type.name());
     }
 
     @Override

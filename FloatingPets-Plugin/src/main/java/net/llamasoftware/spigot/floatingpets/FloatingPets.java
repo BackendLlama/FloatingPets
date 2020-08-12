@@ -75,11 +75,11 @@ public final class FloatingPets extends JavaPlugin {
     public FloatingPets(){
         commandManager     = new CommandManager(this);
         yamlManager        = new YAMLManager(this);
+        nmsHelper          = new NMSHelper();
         settingManager     = new SettingManager(this);
         cooldownManager    = new CooldownManager();
         registrationHelper = new RegistrationHelper(this);
         utility            = new Utility(this);
-        nmsHelper          = new NMSHelper();
         petManager         = new PetManager(this);
         defaultExecutor    = new BaseCommandExecutor(this);
         menuManager        = new MenuManager(this);
@@ -190,17 +190,31 @@ public final class FloatingPets extends JavaPlugin {
                 new CommandSelect(this),
                 new CommandList(this),
                 new CommandSpawn(this),
-                new CommandName(this),
                 new CommandRemove(this),
                 new CommandHide(this),
-                new CommandRide(this),
-                new CommandHat(this),
                 new CommandTeleport(this),
                 new CommandLight(this),
                 new CommandCalloff(this),
                 new CommandRemoveAll(this),
+                new CommandAdmin(this),
                 new CommandReload(this),
                 new CommandParticle(this)).forEach(commandManager::registerCommand);
+
+        if(isSetting(Setting.PET_NAME_CUSTOM)){
+           commandManager.registerCommand(new CommandName(this));
+        }
+
+        if(isSetting(Setting.PET_RIDING)){
+            commandManager.registerCommand(new CommandRide(this));
+        }
+
+        if(isSetting(Setting.PET_HAT_COSMETIC)){
+            commandManager.registerCommand(new CommandHat(this));
+        }
+
+        if(isSetting(Setting.PET_SKILLS)){
+            commandManager.registerCommand(new CommandSkill(this));
+        }
     }
 
     private void sendInfoMessage(String message){
@@ -261,12 +275,8 @@ public final class FloatingPets extends JavaPlugin {
             new PetPlaceholderExpansion(this).register();
         }
 
-        if(isSetting(Setting.PET_SHOP_ENABLED)) {
-            RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
-            if (rsp == null) {
-                return;
-            }
-
+        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+        if (rsp != null){
             economy = rsp.getProvider();
         }
 
@@ -280,5 +290,9 @@ public final class FloatingPets extends JavaPlugin {
     public Boolean getSetting(String key){ return getConfig().getBoolean("settings." + key); }
 
     public String getStringSetting(Setting setting){ return getConfig().getString("settings." + setting.getKey()); }
+
+    public boolean isEconomy() {
+        return economy != null;
+    }
 
 }

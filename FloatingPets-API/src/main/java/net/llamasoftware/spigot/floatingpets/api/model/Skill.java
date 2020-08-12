@@ -1,13 +1,14 @@
 package net.llamasoftware.spigot.floatingpets.api.model;
 
 import lombok.Getter;
+import lombok.Setter;
 
 public abstract class Skill {
 
     @Getter
     public final Type type;
-    @Getter
-    public final int level;
+    @Getter @Setter
+    public int level;
 
     public Skill(Type type, int level){
         this.type  = type;
@@ -22,7 +23,7 @@ public abstract class Skill {
 
         ATTRIBUTE,
         BEACON,
-        CUSTOM
+        STORAGE,
 
     }
 
@@ -31,7 +32,7 @@ public abstract class Skill {
         ATTACK_DAMAGE(Implementation.ATTRIBUTE),
         ATTACK_SPEED(Implementation.ATTRIBUTE),
         BEACON(Implementation.BEACON),
-        STORAGE(Implementation.CUSTOM);
+        STORAGE(Implementation.STORAGE);
 
         @Getter
         private final Implementation implementation;

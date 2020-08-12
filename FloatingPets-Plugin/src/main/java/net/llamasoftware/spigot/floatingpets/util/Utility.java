@@ -8,8 +8,10 @@ import net.llamasoftware.spigot.floatingpets.api.model.Setting;
 import net.llamasoftware.spigot.floatingpets.api.model.Skill;
 import net.llamasoftware.spigot.floatingpets.locale.Locale;
 import net.llamasoftware.spigot.floatingpets.menu.MenuPetSpecification;
+import net.llamasoftware.spigot.floatingpets.model.misc.SkillCategory;
 import net.llamasoftware.spigot.floatingpets.model.skill.AttributeSkill;
 import net.llamasoftware.spigot.floatingpets.model.skill.BeaconSkill;
+import net.llamasoftware.spigot.floatingpets.model.skill.StorageSkill;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -19,6 +21,7 @@ import org.bukkit.entity.Player;
 
 import java.text.DecimalFormat;
 import java.util.LinkedList;
+import java.util.Optional;
 
 public final class Utility {
 
@@ -63,7 +66,7 @@ public final class Utility {
     public Integer[] parsePetId(Player player, String command, String[] arguments, boolean spawned, boolean... longer){
         boolean ln = (longer != null && longer.length > 0) && longer[0];
         LinkedList<Pet> pets = spawned ?
-                plugin.getPetManager().getPetByOwner(player) :
+                plugin.getPetManager().getPetsByOwner(player) :
                 plugin.getStorageManager().getPetsByOwner(player.getUniqueId());
 
         if(arguments.length != 0 && !ln){
@@ -146,14 +149,20 @@ public final class Utility {
         return limit;
     }
 
-    public static Skill deserializeSkill(String serialized){
+    public static String serializeSkill(Skill skill){
+        Skill.Type type = skill.getType();
+        int level       = skill.getLevel();
 
+        return type + ":" + level;
+    }
+
+    public static Skill deserializeSkill(String serialized, FloatingPets plugin){
         String[] data = serialized.split(":");
         Skill.Type type = Skill.Type.valueOf(data[0]);
         int level       = Integer.parseInt(data[1]);
 
-        return getSkillFromType(type, level);
-
+        Optional<SkillCategory> category = plugin.getSettingManager().getCategoryByType(type);
+        return category.map(skillCategory -> skillCategory.getLevels().get(level - 1).getSkill()).orElse(null);
     }
 
     public static Skill getSkillFromType(Skill.Type type, int level){
@@ -164,6 +173,10 @@ public final class Utility {
 
             case BEACON:{
                 return new BeaconSkill(type, level);
+            }
+
+            case STORAGE:{
+                return new StorageSkill(type, level);
             }
         }
 
