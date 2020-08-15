@@ -314,6 +314,19 @@ public class SQLStorageManager extends StorageManager {
         }
     }
 
+    @Override
+    public void storeType(PetType type) {
+        String key = UUID.randomUUID().toString();
+        mySqlManager.execute("INSERT INTO " + getTable("type") + " (uniqueId, name, texture) VALUES(?, ?, ?)",
+                key, type.getName(), type.getTexture());
+    }
+
+    @Override
+    public void removeType(PetType type) {
+        cachedTypes.remove(type);
+        mySqlManager.execute("DELETE FROM " + getTable("type") + " WHERE uniqueId=?", type.getUniqueId().toString());
+    }
+
     private void updateValue(Pet pet, String col, String value){
         mySqlManager.execute("UPDATE " +  getTable("pet") + " SET " + col + "=? WHERE uniqueId=?", value, pet.getUniqueId().toString());
     }

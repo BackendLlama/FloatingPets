@@ -287,6 +287,23 @@ public class FlatfileStorageManager extends StorageManager {
         }
     }
 
+    @Override
+    public void storeType(PetType type) {
+        cachedTypes.add(type);
+
+        String key = type.getUniqueId().toString();
+        petTypeFile.getConfiguration().set("types." + key + ".name", type.getName());
+        petTypeFile.getConfiguration().set("types." + key + ".texture", type.getTexture());
+        petTypeFile.save();
+    }
+
+    @Override
+    public void removeType(PetType type) {
+        cachedTypes.remove(type);
+        petTypeFile.getConfiguration().set("types." + type.getUniqueId().toString(), null);
+        petTypeFile.save();
+    }
+
     private void updateValue(Pet pet, String key, Object value){
         if(!petDataFile.isLoaded())
             petDataFile.load();

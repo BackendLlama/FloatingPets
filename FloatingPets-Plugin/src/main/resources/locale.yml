@@ -87,6 +87,9 @@ locale:
                 calloff:
                     description: "Call off targets"
                     syntax: ""
+                skill:
+                    description: "Open skill menu"
+                    syntax: ""
         select:
             invalid-type: "&cThere is no pet type by that name."
             removed-current: "&7You removed your current pet."
@@ -137,6 +140,22 @@ locale:
         skill:
             no-skills: "&cYou don't have permission to use any skills."
         admin:
+            help:
+                - "&a&lAdmin Commands"
+                - " "
+                - " &2/pet admin &7- &aShow this help menu"
+                - " &2/pet admin type create <name> <texture> &7- &aCreate a custom pet type"
+                - " &2/pet admin type remove <name> &7- &aRemove a pet type"
+                - " &2/pet admin remove <player> <type> &7- &aRemove a pet from player"
+            type:
+                create:
+                    syntax: "&cSyntax: /pet admin type create <name> <texture>"
+                    already_exists: "&cA type with this name already exists."
+                    created: "&7Created new pet type called &3%name%"
+                remove:
+                    syntax: "&cSyntax: /pet admin type remove <name>"
+                    no_exist: "&cPet type doesn't exist."
+                    removed: "&7Removed pet type with name &3%name%"
             remove:
                 syntax: "&cSyntax: /pet admin remove <player> <type>"
                 invalid: "&cPlayer doesn't have a pet with that type."

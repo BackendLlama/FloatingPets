@@ -23,18 +23,25 @@ public class MenuItemRepository {
     }
 
     public MenuItemRepository add(MenuItem item){
+        removeIfExists(item);
         this.items.add(item);
         return this;
     }
 
     public MenuItemRepository add(List<MenuItem> items){
+        items.forEach(this::removeIfExists);
         this.items.addAll(items);
         return this;
     }
 
     public MenuItemRepository add(MenuItemRepository repository){
+        repository.getAll().forEach(this::removeIfExists);
         this.items.addAll(repository.getAll());
         return this;
+    }
+    
+    private void removeIfExists(MenuItem item){
+        items.removeIf(menuItem -> item.getSlot() == menuItem.getSlot());
     }
 
     public MenuItemRepository filledRow(Material material, int... rows){

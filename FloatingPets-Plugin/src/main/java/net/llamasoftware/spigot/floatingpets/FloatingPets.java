@@ -2,6 +2,7 @@ package net.llamasoftware.spigot.floatingpets;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import lombok.Getter;
 import net.llamasoftware.spigot.floatingpets.api.model.Pet;
 import net.llamasoftware.spigot.floatingpets.api.model.Setting;
 import net.llamasoftware.spigot.floatingpets.command.BaseCommandExecutor;
@@ -30,7 +31,6 @@ import net.llamasoftware.spigot.floatingpets.manager.storage.impl.SQLStorageMana
 import net.llamasoftware.spigot.floatingpets.model.config.ConfigDefinition;
 import net.llamasoftware.spigot.floatingpets.model.config.YAMLFile;
 import net.llamasoftware.spigot.floatingpets.util.Utility;
-import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
@@ -275,9 +275,11 @@ public final class FloatingPets extends JavaPlugin {
             new PetPlaceholderExpansion(this).register();
         }
 
-        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
-        if (rsp != null){
-            economy = rsp.getProvider();
+        if(pluginManager.getPlugin("Vault") != null) {
+            RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+            if (rsp != null) {
+                economy = rsp.getProvider();
+            }
         }
 
     }

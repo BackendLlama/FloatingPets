@@ -91,6 +91,10 @@ public abstract class StorageManager {
 
     /* Type storage */
 
+    public abstract void storeType(PetType type);
+
+    public abstract void removeType(PetType type);
+
     public Optional<PetType> getTypeByName(String name){
         return cachedTypes.stream()
                 .filter(petType -> petType.getName().equalsIgnoreCase(name))
@@ -142,7 +146,8 @@ public abstract class StorageManager {
         RENAME,
         REMOVE,
         PARTICLE,
-        SKILL, EXTRA;
+        SKILL,
+        EXTRA
     }
 
 }
