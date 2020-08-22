@@ -94,8 +94,8 @@ public class NMSManagerImpl implements NMSManager {
         Bukkit.getWorlds().forEach(world -> world.getEntities().forEach(entity -> {
             CraftEntity ent = (CraftEntity) entity;
             if(ent.getHandle() instanceof FloatingPet_v1_15_R1 || ent.hasMetadata("FloatingPets_Pet")){
+                ((CraftEntity) entity).getHandle().damageEntity(DamageSource.GENERIC, 100);
                 ent.remove();
-                ((FloatingPet_v1_15_R1) ent.getHandle()).kill();
             }
         }));
     }

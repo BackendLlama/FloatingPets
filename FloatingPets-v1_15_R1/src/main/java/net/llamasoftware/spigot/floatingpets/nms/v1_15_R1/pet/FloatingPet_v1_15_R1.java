@@ -25,7 +25,6 @@ public class FloatingPet_v1_15_R1 extends EntityCat implements FloatingPet {
     private Location location;
     private Player onlineOwner;
     private Map<Setting, String> settings;
-    private long latestTick;
 
     @SuppressWarnings({"unused", "rawtypes"})
     public FloatingPet_v1_15_R1(EntityTypes types, World world) {
@@ -49,27 +48,6 @@ public class FloatingPet_v1_15_R1 extends EntityCat implements FloatingPet {
                 entities.remove();
             }
         }
-    }
-
-    @Override
-    public void tick() {
-        super.tick();
-        latestTick = System.currentTimeMillis();
-        /* Let pet spawn when difficulty is peaceful
-        if (!this.world.isClientSide && this.world.getDifficulty() == EnumDifficulty.PEACEFUL) {
-            this.die();
-        }*/
-    }
-
-    @Override
-    public void die(){
-        if(System.currentTimeMillis() - latestTick > 300){
-            super.die();
-        }
-    }
-
-    public void kill(){
-        super.die();
     }
 
     @Override
@@ -117,7 +95,8 @@ public class FloatingPet_v1_15_R1 extends EntityCat implements FloatingPet {
 
         goalSelector.a(7, new PathfinderGoalRandomStrollLand(this, 1.0D));
 
-        goalSelector.a(8, new net.llamasoftware.spigot.floatingpets.nms.v1_15_R1.pathfinder.PathfinderGoalFollowOwner(this, onlineOwner, 1.2));
+        goalSelector.a(8, new net.llamasoftware.spigot.floatingpets.nms.v1_15_R1.pathfinder
+                .PathfinderGoalFollowOwner(this, onlineOwner, 1.2));
         goalSelector.a(8, new PathfinderGoalLookAtPlayer(this, EntityHuman.class, 8.0F));
         goalSelector.a(8, new PathfinderGoalRandomLookaround(this));
 

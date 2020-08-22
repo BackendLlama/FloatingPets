@@ -28,6 +28,4 @@ public interface FloatingPet {
 
     void teleportToOwner();
 
-    void kill();
-
 }

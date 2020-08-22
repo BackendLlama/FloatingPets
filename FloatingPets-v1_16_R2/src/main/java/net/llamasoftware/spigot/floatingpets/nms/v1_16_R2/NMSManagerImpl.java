@@ -95,7 +95,6 @@ public class NMSManagerImpl implements NMSManager {
             CraftEntity ent = (CraftEntity) entity;
             if(ent.getHandle() instanceof FloatingPet_v1_16_R2 || ent.hasMetadata("FloatingPets_Pet")){
                 ent.remove();
-                ((FloatingPet_v1_16_R2) ent.getHandle()).kill();
             }
         }));
     }

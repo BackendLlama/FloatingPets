@@ -25,6 +25,9 @@ settings:
     pet:
         spawn_on_join: true
         higher_pet: false
+        movement:
+            hide_name_on_move: false
+            still_float: true
         categories:
             enabled: false
             types:
@@ -201,6 +204,7 @@ settings:
                     enabled: true
                 death_message: true
                 remove_on_death: true
+                respawn_on_death: true
                 damage:
                     fall: true
                     void: false

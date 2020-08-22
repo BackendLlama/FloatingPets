@@ -105,7 +105,7 @@ public class MenuSkillCategoryList extends Menu {
                         return;
                     }
 
-                    economy.depositPlayer(player, cost);
+                    economy.withdrawPlayer(player, cost);
 
                     if(hasSkill){
                         pet.getSkills().remove(skill.get());

@@ -5,6 +5,7 @@ import net.llamasoftware.spigot.floatingpets.api.model.Pet;
 import net.llamasoftware.spigot.floatingpets.api.model.PetType;
 import net.llamasoftware.spigot.floatingpets.api.model.Setting;
 import net.llamasoftware.spigot.floatingpets.locale.Locale;
+import net.llamasoftware.spigot.floatingpets.model.misc.Cooldown;
 import net.llamasoftware.spigot.floatingpets.model.misc.Food;
 import net.llamasoftware.spigot.floatingpets.model.pet.IPet;
 import lombok.Getter;
@@ -18,11 +19,11 @@ import java.util.stream.Stream;
 
 public abstract class StorageManager {
 
-    public final LinkedList<Pet> cachedPets;
+    protected final LinkedList<Pet> cachedPets;
     @Getter
     public final List<PetType> cachedTypes;
-    public final List<Food> cachedFoodItems;
-    public final Map<String, Object> cachedLocaleData;
+    protected final List<Food> cachedFoodItems;
+    protected final Map<String, Object> cachedLocaleData;
 
     private final FloatingPets plugin;
 
@@ -70,9 +71,58 @@ public abstract class StorageManager {
     }
 
     public void selectPet(Player player, PetType type){
+
+        boolean settingCooldown = plugin.isSetting(Setting.PET_COOLDOWN_SELECT);
+        Optional<Cooldown> cooldown = plugin.getCooldownManager()
+                .getCooldown(player.getUniqueId(), Cooldown.Type.SELECT);
+
+        List<Pet> currentPets = plugin.getStorageManager().getPetsByOwner(player.getUniqueId());
+        Locale locale = plugin.getLocale();
+
+        if(settingCooldown) {
+            if (cooldown.isPresent()) {
+                locale.send(player, "cooldown.timeout", false,
+                        new Locale.Placeholder("time", String.valueOf(cooldown.get().getTimeLeft() / 1000)));
+
+                return;
+            }
+        }
+
+        if(!plugin.isSetting(Setting.MULTIPLE_PETS)
+                && !plugin.getPetManager().getPetsByOwner(player).isEmpty()) {
+
+            Pet currentPet = currentPets.get(0);
+            locale.send(player, "commands.select.removed-current", true);
+            plugin.getPetManager().despawnPet(currentPet);
+            plugin.getStorageManager().updatePet(currentPet, StorageManager.Action.REMOVE);
+        }
+
+        if(plugin.isSetting(Setting.MULTIPLE_PETS) && plugin.getStorageManager()
+                .getPetsByOwner(player.getUniqueId()).size()
+                >= plugin.getUtility().getPermissionBasedSetting(player, "pet.multiple_pets.limits",
+                "limit", Long.MAX_VALUE)){
+
+            locale.send(player, "commands.select.pet-limit", true);
+            return;
+        }
+
+        if(plugin.getConfigDefinition().isExcludedWorld(player.getWorld().getName())){
+            locale.send(player, "generic.world-restricted", false);
+            return;
+        }
+
+        Optional<Pet> current = plugin.getStorageManager().getPetsByOwner(player.getUniqueId())
+                .stream().filter(p -> p.getType() == type).findAny();
+
+        if(current.isPresent()){
+            locale.send(player, "commands.select.removed-current", true);
+            plugin.getPetManager().despawnPet(current.get());
+            plugin.getStorageManager().updatePet(current.get(), StorageManager.Action.REMOVE);
+        }
+
         Pet pet = IPet.builder()
                 .uniqueId(UUID.randomUUID())
-                .name(plugin.getLocale().transformPlaceholders(plugin.getStringSetting(Setting.PET_NAME_DEFAULT_NAME),
+                .name(locale.transformPlaceholders(plugin.getStringSetting(Setting.PET_NAME_DEFAULT_NAME),
                         new Locale.Placeholder("owner", player.getName()),
                         new Locale.Placeholder("type", type.getName())))
                 .owner(player.getUniqueId())
@@ -83,6 +133,14 @@ public abstract class StorageManager {
 
         storePet(pet, true);
         plugin.getPetManager().spawnPet(pet, player.getLocation(), player, true);
+
+        if(settingCooldown) {
+            long expiry = System.currentTimeMillis()
+                    + 1000 * plugin.getUtility().getPermissionBasedSetting(player, "pet.cooldown.select.limits",
+                    "select_cooldown", 0);
+
+            plugin.getCooldownManager().addCooldown(player.getUniqueId(), Cooldown.Type.SELECT, expiry);
+        }
     }
 
     public abstract void storePet(Pet pet, boolean save);

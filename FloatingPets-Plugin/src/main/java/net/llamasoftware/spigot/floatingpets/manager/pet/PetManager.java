@@ -125,7 +125,6 @@ public class PetManager {
             return;
 
         activePets.remove(pet);
-        pet.getEntity().kill();
         pet.remove();
     }
 

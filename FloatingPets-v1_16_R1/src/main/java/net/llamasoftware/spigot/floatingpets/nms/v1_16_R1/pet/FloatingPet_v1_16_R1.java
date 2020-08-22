@@ -52,27 +52,6 @@ public class FloatingPet_v1_16_R1 extends EntityCat implements FloatingPet {
     }
 
     @Override
-    public void tick() {
-        super.tick();
-        latestTick = System.currentTimeMillis();
-        /* Let pet spawn when difficulty is peaceful
-        if (!this.world.isClientSide && this.world.getDifficulty() == EnumDifficulty.PEACEFUL) {
-            this.die();
-        }*/
-    }
-
-    @Override
-    public void die(){
-        if(System.currentTimeMillis() - latestTick > 300){
-            super.die();
-        }
-    }
-
-    public void kill(){
-        super.die();
-    }
-
-    @Override
     public EntityTypes<?> getEntityType() {
         return EntityTypes.CAT;
     }
