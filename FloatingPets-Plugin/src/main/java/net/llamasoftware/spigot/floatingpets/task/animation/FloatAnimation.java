@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 public class FloatAnimation extends PetAnimation {
 
     private boolean moveDown;
+    private static final double MOVE_FACTOR = 0.045;
 
     public FloatAnimation(Pet pet, Player player) {
         super(pet, player);
@@ -17,13 +18,13 @@ public class FloatAnimation extends PetAnimation {
     public void animate() {
 
         Location location = pet.getNameTag().getLocation();
-        pet.getNameTag().teleport(location.add(0, (moveDown ? -1:1) * 0.06, 0));
+        pet.getNameTag().teleport(location.add(0, (moveDown ? -1:1) * MOVE_FACTOR, 0));
 
         if(location.getY() >= (player.getLocation().getY() + player.getHeight()/2)){
             moveDown = true;
         }
 
-        if(location.getY() <= player.getLocation().getY()-0.3){
+        if(location.getY() <= player.getLocation().getY() - 0.3){
             moveDown = false;
         }
 

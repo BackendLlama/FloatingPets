@@ -60,9 +60,12 @@ public class PathfinderGoalFollowOwner extends PathfinderGoal {
                 .anyMatch(passenger -> passenger instanceof Player))
             return;
 
+        if(!inSameWorld())
+            return;
+
         double distance = this.entity.getBukkitEntity().getLocation().distance(owner.getLocation());
 
-        if(inSameWorld() && distance > 2.5) {
+        if(distance > 2.5) {
             PathEntity path = entity.getNavigation().a(owner.getLocation().getX() + 1, owner.getLocation().getY(),
                     owner.getLocation().getZ() - 1,1);
 
@@ -73,7 +76,7 @@ public class PathfinderGoalFollowOwner extends PathfinderGoal {
             if(pet.isStill())
                 pet.setStill(false);
 
-        } else if (distance <= 2){
+        } else {
             if(!pet.isStill() && (System.currentTimeMillis() - pet.getLastMove()) > 1500)
                 pet.setStill(true);
         }

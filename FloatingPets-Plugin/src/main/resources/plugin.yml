@@ -1,5 +1,5 @@
 name: "FloatingPets"
-version: "2.5.0"
+version: "2.5.5"
 main: net.llamasoftware.spigot.floatingpets.FloatingPets
 api-version: "1.15"
 softdepend: [Vault, ProtocolLib, LightAPI, WorldGuard, PlaceholderAPI, Common]

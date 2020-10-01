@@ -9,6 +9,7 @@ import net.llamasoftware.spigot.floatingpets.model.misc.Cooldown;
 import net.llamasoftware.spigot.floatingpets.model.misc.Food;
 import net.llamasoftware.spigot.floatingpets.model.pet.IPet;
 import lombok.Getter;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -120,20 +121,7 @@ public abstract class StorageManager {
             plugin.getStorageManager().updatePet(current.get(), StorageManager.Action.REMOVE);
         }
 
-        Pet pet = IPet.builder()
-                .uniqueId(UUID.randomUUID())
-                .name(locale.transformPlaceholders(plugin.getStringSetting(Setting.PET_NAME_DEFAULT_NAME),
-                        new Locale.Placeholder("owner", player.getName()),
-                        new Locale.Placeholder("type", type.getName())))
-                .owner(player.getUniqueId())
-                .type(type)
-                .skills(new ArrayList<>())
-                .extra(new HashMap<>())
-                .plugin(plugin)
-                .build();
-
-        storePet(pet, true);
-        plugin.getPetManager().spawnPet(pet, player.getLocation(), player, true);
+        plugin.getPetManager().spawnPet(createPet(type, player), player.getLocation(), player, true);
 
         if(settingCooldown) {
             long expiry = System.currentTimeMillis()
@@ -142,6 +130,27 @@ public abstract class StorageManager {
 
             plugin.getCooldownManager().addCooldown(player.getUniqueId(), Cooldown.Type.SELECT, expiry);
         }
+    }
+
+    public Pet createPet(PetType type, OfflinePlayer offlinePlayer){
+
+        Locale locale = plugin.getLocale();
+
+        Pet pet = IPet.builder()
+                .uniqueId(UUID.randomUUID())
+                .name(locale.transformPlaceholders(plugin.getStringSetting(Setting.PET_NAME_DEFAULT_NAME),
+                        new Locale.Placeholder("owner", offlinePlayer.getName()),
+                        new Locale.Placeholder("type", type.getName())))
+                .owner(offlinePlayer.getUniqueId())
+                .type(type)
+                .skills(new ArrayList<>())
+                .extra(new HashMap<>())
+                .plugin(plugin)
+                .build();
+
+        storePet(pet, true);
+
+        return pet;
     }
 
     public abstract void storePet(Pet pet, boolean save);

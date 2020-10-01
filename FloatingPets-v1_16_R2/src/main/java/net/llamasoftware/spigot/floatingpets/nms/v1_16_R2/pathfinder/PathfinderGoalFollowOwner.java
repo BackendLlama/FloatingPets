@@ -77,7 +77,7 @@ public class PathfinderGoalFollowOwner extends PathfinderGoal {
             if(pet.isStill())
                 pet.setStill(false);
 
-        } else if (distance <= 2){
+        } else {
             if(!pet.isStill() && (System.currentTimeMillis() - pet.getLastMove()) > 1500)
                 pet.setStill(true);
 

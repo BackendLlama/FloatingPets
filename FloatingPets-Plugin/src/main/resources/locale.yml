@@ -156,6 +156,9 @@ locale:
                     syntax: "&cSyntax: /pet admin type remove <name>"
                     no_exist: "&cPet type doesn't exist."
                     removed: "&7Removed pet type with name &3%name%"
+            give:
+                syntax: "&cSyntax: /pet admin give <player> <type>"
+                given: "&7Gave %player% &7a &3%type% pet&7."
             remove:
                 syntax: "&cSyntax: /pet admin remove <player> <type>"
                 invalid: "&cPlayer doesn't have a pet with that type."

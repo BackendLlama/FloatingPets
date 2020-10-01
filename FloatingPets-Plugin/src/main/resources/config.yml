@@ -29,7 +29,7 @@ settings:
             hide_name_on_move: false
             still_animation:
                 enabled: true
-                type: "CIRCLE"
+                type: "FLOAT"
         categories:
             enabled: false
             types:

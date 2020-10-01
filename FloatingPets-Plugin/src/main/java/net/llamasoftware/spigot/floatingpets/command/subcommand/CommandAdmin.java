@@ -11,6 +11,7 @@ import net.llamasoftware.spigot.floatingpets.manager.storage.StorageManager;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.List;
 import java.util.Optional;
@@ -129,6 +130,38 @@ public class CommandAdmin extends Command {
                         new Locale.Placeholder("type", pet.get().getType().getName()));
                 break;
             }
+
+            case "give":{
+
+                if(arguments.length != 3){
+                    locale.send(sender, "commands.admin.give.syntax", false);
+                    return;
+                }
+
+                @SuppressWarnings("deprecation") // Deprecated API usage since method is used for it's intended purpose.
+                OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(arguments[1]);
+
+                Optional<PetType> type = plugin.getStorageManager().getTypeByName(arguments[2]);
+                if (!type.isPresent()) {
+                    locale.send(sender, "commands.select.invalid-type", false);
+                    return;
+                }
+
+                if(offlinePlayer.isOnline()) {
+                    Player player = (Player) offlinePlayer;
+                    plugin.getStorageManager().selectPet(player, type.get());
+                } else {
+                    plugin.getStorageManager().createPet(type.get(), offlinePlayer);
+                }
+
+                locale.send(sender, "commands.admin.give.given", true,
+                        new Locale.Placeholder("player", offlinePlayer.getName()),
+                        new Locale.Placeholder("type", type.get().getName()));
+
+                return;
+
+            }
+
             default:
                 break;
         }
