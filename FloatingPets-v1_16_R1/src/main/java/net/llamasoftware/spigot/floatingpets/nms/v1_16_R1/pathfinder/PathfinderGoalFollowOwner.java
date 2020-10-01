@@ -1,17 +1,15 @@
 package net.llamasoftware.spigot.floatingpets.nms.v1_16_R1.pathfinder;
 
 import net.llamasoftware.spigot.floatingpets.api.model.FloatingPet;
+import net.llamasoftware.spigot.floatingpets.api.model.Pet;
 import net.llamasoftware.spigot.floatingpets.api.model.Setting;
 import net.minecraft.server.v1_16_R1.EntityInsentient;
 import net.minecraft.server.v1_16_R1.PathEntity;
 import net.minecraft.server.v1_16_R1.PathfinderGoal;
-import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_16_R1.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.util.Vector;
 
 public class PathfinderGoalFollowOwner extends PathfinderGoal {
 
@@ -49,6 +47,7 @@ public class PathfinderGoalFollowOwner extends PathfinderGoal {
     public void c() {
 
         Entity bukkitEntity = entity.getBukkitEntity();
+        Pet pet = this.pet.getPet();
 
         if (!bukkitEntity.getWorld().getName().equals(owner.getWorld().getName())){
             bukkitEntity.teleport(owner.getLocation());
@@ -61,28 +60,23 @@ public class PathfinderGoalFollowOwner extends PathfinderGoal {
                 .anyMatch(passenger -> passenger instanceof Player))
             return;
 
-        if(inSameWorld() && this.entity.getBukkitEntity().getLocation().distance(owner.getLocation()) >= 1.5) {
+        double distance = this.entity.getBukkitEntity().getLocation().distance(owner.getLocation());
+
+        if(inSameWorld() && distance >= 2.5) {
             PathEntity path = entity.getNavigation().a(owner.getLocation().getX() + 1, owner.getLocation().getY(),
                     owner.getLocation().getZ() - 1,1);
 
             entity.getNavigation().a(path, speed);
+            // TODO move code like this to plugin level
+            pet.setLastMove(System.currentTimeMillis());
 
-        } else {
-            if(ownerIsLooking()) {
-                entity.getControllerLook().a(owner.getLocation().getX(),
-                        owner.getLocation().getY() + ((CraftPlayer) owner).getHandle().getHeadHeight(), owner.getLocation().getZ());
-            }
+            if(pet.isStill())
+                pet.setStill(false);
+
+        } else if (distance <= 2){
+            if(!pet.isStill() && (System.currentTimeMillis() - pet.getLastMove()) > 1500)
+                pet.setStill(true);
         }
-
-    }
-
-    private boolean ownerIsLooking(){
-
-        Location eye = owner.getEyeLocation();
-        Vector toEntity = ((LivingEntity) entity.getBukkitEntity()).getEyeLocation().toVector().subtract(eye.toVector());
-        double dot = toEntity.normalize().dot(eye.getDirection());
-
-        return dot > 0.99D;
 
     }
 

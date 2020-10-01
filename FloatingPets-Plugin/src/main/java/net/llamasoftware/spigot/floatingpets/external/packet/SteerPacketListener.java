@@ -41,7 +41,9 @@ public class SteerPacketListener {
                 if(vehicle == null)
                     return;
 
-                Optional<Pet> pet = fpPlugin.getPetManager().getPetByEntity(vehicle, true);
+                Optional<Pet> pet = fpPlugin.getPetManager().getActivePets()
+                        .stream().filter(p -> p.getNameTag().equals(vehicle)).findAny();
+
                 if(!pet.isPresent())
                     return;
 

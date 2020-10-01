@@ -134,6 +134,7 @@ public class FlatfileStorageManager extends StorageManager {
                                                 .owner(owner)
                                                 .type(type.get())
                                                 .skills(skills)
+                                                .plugin(plugin)
                                                 .name(name);
 
             net.llamasoftware.spigot.floatingpets.api.model.Particle petParticle = null;

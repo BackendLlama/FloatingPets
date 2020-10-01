@@ -23,7 +23,7 @@ public class CommandRide extends Command {
             return;
         }
 
-        pet.getEntity().getEntity().addPassenger(player);
+        pet.getNameTag().addPassenger(player);
         locale.send(player, "commands.ride.riding", true);
 
     }

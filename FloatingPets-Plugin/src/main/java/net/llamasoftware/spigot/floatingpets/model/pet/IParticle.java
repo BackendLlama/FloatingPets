@@ -34,7 +34,8 @@ public class IParticle implements Particle {
     @Override
     public void start(){
         Bukkit.getScheduler().runTaskTimer(plugin, bukkitTask -> {
-            if(!plugin.getPetManager().isPetSpawned(pet) || !pet.hasParticle() || !pet.isAlive() || pet.getOnlineOwner() == null) {
+            if(!plugin.getPetManager().isPetSpawned(pet) || !pet.hasParticle()
+                    || !pet.isAlive() || pet.getOnlineOwner() == null) {
                 return;
             }
 
@@ -51,10 +52,11 @@ public class IParticle implements Particle {
     }
 
     private void spawnParticle(Player player){
-        Location location = pet.getLocation().add(0,0.5,0);
+        Location location = pet.getNameTag().getLocation().add(0,0.5,0);
         int i = 1;
         int v = 0;
         int v3 = 0;
+
         if(particle != org.bukkit.Particle.REDSTONE){
             player.spawnParticle(particle, location, i, v, v, v, v3);
         } else {

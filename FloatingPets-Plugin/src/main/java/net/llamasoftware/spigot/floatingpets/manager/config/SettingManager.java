@@ -4,6 +4,7 @@ import net.llamasoftware.spigot.floatingpets.FloatingPets;
 import net.llamasoftware.spigot.floatingpets.api.model.PetCategory;
 import net.llamasoftware.spigot.floatingpets.api.model.Setting;
 import net.llamasoftware.spigot.floatingpets.api.model.Skill;
+import net.llamasoftware.spigot.floatingpets.model.misc.AnimationType;
 import net.llamasoftware.spigot.floatingpets.model.misc.ParticleInfo;
 import net.llamasoftware.spigot.floatingpets.model.misc.SkillCategory;
 import net.llamasoftware.spigot.floatingpets.model.misc.SkillLevel;
@@ -27,6 +28,8 @@ public class SettingManager {
     private final List<SkillCategory> skillCategories;
     @Getter
     private final List<PetCategory> categories;
+    @Getter
+    private final AnimationType animationType;
 
     public SettingManager(FloatingPets plugin) {
         this.plugin           = plugin;
@@ -34,6 +37,22 @@ public class SettingManager {
         this.enabledParticles = loadEnabledParticles();
         this.skillCategories  = loadSkillCategories();
         this.categories       = loadCategories();
+        this.animationType    = loadAnimationType();
+    }
+
+    private AnimationType loadAnimationType() {
+
+        if(!plugin.isSetting(Setting.PET_STILL_ANIMATION))
+            return AnimationType.NONE;
+
+        String typeStr = plugin.getStringSetting(Setting.PET_STILL_ANIMATION_TYPE);
+
+        if(Arrays.stream(AnimationType.values())
+                .noneMatch(type -> type.name().equalsIgnoreCase(typeStr)))
+            return AnimationType.NONE;
+
+        return AnimationType.valueOf(typeStr.toUpperCase());
+
     }
 
     private List<PetCategory> loadCategories() {
@@ -126,7 +145,7 @@ public class SettingManager {
         return particleInfos;
     }
 
-    public List<SkillCategory> loadSkillCategories(){
+    private List<SkillCategory> loadSkillCategories(){
 
         ConfigurationSection section   = config.getConfigurationSection("settings.pet.skills.types");
         List<SkillCategory> categories = new ArrayList<>();

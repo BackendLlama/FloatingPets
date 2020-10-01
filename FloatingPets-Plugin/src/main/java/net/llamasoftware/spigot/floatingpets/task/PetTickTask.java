@@ -2,6 +2,7 @@ package net.llamasoftware.spigot.floatingpets.task;
 
 import net.llamasoftware.spigot.floatingpets.FloatingPets;
 import net.llamasoftware.spigot.floatingpets.api.model.Pet;
+import net.llamasoftware.spigot.floatingpets.api.model.PetAnimation;
 import net.llamasoftware.spigot.floatingpets.api.model.Skill;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
@@ -31,23 +32,30 @@ public class PetTickTask implements Runnable {
             return;
 
         tickMovement();
+        tickAnimation();
         tickAutomaticHat();
         tickChangeUpdate();
         tickBeaconSkill();
     }
 
     private void tickMovement(){
-        if(pet.getNameTag() != null){
+        if(pet.getNameTag() != null && !pet.isStill()){
             plugin.getNmsHelper().getNmsManager()
                     .teleport((ArmorStand) pet.getNameTag(), pet.getEntity().getEntity());
         }
+    }
+
+    private void tickAnimation(){
+        PetAnimation animation = pet.getAnimation();
+        if(animation != null)
+            animation.run();
     }
 
     private void tickAutomaticHat(){
         if(!owner.isOnGround() && !pet.getEntity().getEntity().isLeashed()){
             int dist = plugin.getUtility().getDistanceFromGround(owner);
             if(!owner.getPassengers().contains(pet.getNameTag())
-                    && !pet.getEntity().getEntity().getPassengers().contains(owner)
+                    && !pet.getNameTag().getPassengers().contains(owner)
                     && dist >= 8){
 
                 owner.addPassenger(pet.getNameTag());

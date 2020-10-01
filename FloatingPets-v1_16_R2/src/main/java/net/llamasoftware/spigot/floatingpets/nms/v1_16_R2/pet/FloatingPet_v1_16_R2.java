@@ -98,13 +98,11 @@ public class FloatingPet_v1_16_R2 extends EntityCat implements FloatingPet {
                     ((CraftPlayer) onlineOwner).getHandle()));
         }
 
-        goalSelector.a(7, new PathfinderGoalRandomStrollLand(this, 1.0D));
-
         goalSelector.a(8, new net.llamasoftware.spigot.floatingpets.nms.v1_16_R2.pathfinder
                 .PathfinderGoalFollowOwner(this, onlineOwner, 1.2));
         goalSelector.a(8, new PathfinderGoalLookAtPlayer(this, EntityHuman.class, 8.0F));
         goalSelector.a(8, new PathfinderGoalRandomLookaround(this));
-
+        // goalSelector.a(7, new PathfinderGoalRandomStrollLand(this, 1.0D));
     }
 
     private Object getSelector(String name, Object object){

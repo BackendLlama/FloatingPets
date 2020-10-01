@@ -67,4 +67,16 @@ public interface Pet {
 
     Object getExtra(String key);
 
+    void setStill(boolean still);
+
+    boolean isStill();
+
+    long getLastMove();
+
+    void setLastMove(long timestamp);
+
+    PetAnimation getAnimation();
+
+    void setAnimation(PetAnimation animation);
+
 }

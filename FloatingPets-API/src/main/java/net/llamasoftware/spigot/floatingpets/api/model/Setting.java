@@ -80,6 +80,11 @@ public enum Setting {
     WORLD_FILTER("world_filter.enabled"),
     WORLD_FILTER_RESPAWN("world_filter.respawn"),
 
+    PET_STILL_ANIMATION("pet.movement.still_animation.enabled"),
+    PET_STILL_ANIMATION_TYPE("pet.movement.still_animation.type"),
+
+    PET_HIDE_NAME_ON_MOVE("pet.movement.hide_name_on_move"),
+
     PET_PARTICLE_CUSTOMIZATION("pet.particle.allow_customization"),
 
     ;

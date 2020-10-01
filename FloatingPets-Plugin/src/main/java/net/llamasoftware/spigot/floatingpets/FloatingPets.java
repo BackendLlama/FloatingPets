@@ -6,6 +6,7 @@ import lombok.Getter;
 import net.llamasoftware.spigot.floatingpets.api.model.Pet;
 import net.llamasoftware.spigot.floatingpets.api.model.Setting;
 import net.llamasoftware.spigot.floatingpets.command.BaseCommandExecutor;
+import net.llamasoftware.spigot.floatingpets.command.Command;
 import net.llamasoftware.spigot.floatingpets.command.subcommand.*;
 import net.llamasoftware.spigot.floatingpets.external.packet.SteerPacketListener;
 import net.llamasoftware.spigot.floatingpets.external.placeholder.PetPlaceholderExpansion;
@@ -200,21 +201,15 @@ public final class FloatingPets extends JavaPlugin {
                 new CommandReload(this),
                 new CommandParticle(this)).forEach(commandManager::registerCommand);
 
-        if(isSetting(Setting.PET_NAME_CUSTOM)){
-           commandManager.registerCommand(new CommandName(this));
-        }
+        registerCommand(new CommandName(this), Setting.PET_NAME_CUSTOM);
+        registerCommand(new CommandRide(this), Setting.PET_RIDING);
+        registerCommand(new CommandHat(this), Setting.PET_HAT_COSMETIC);
+        registerCommand(new CommandSkill(this), Setting.PET_SKILLS);
+    }
 
-        if(isSetting(Setting.PET_RIDING)){
-            commandManager.registerCommand(new CommandRide(this));
-        }
-
-        if(isSetting(Setting.PET_HAT_COSMETIC)){
-            commandManager.registerCommand(new CommandHat(this));
-        }
-
-        if(isSetting(Setting.PET_SKILLS)){
-            commandManager.registerCommand(new CommandSkill(this));
-        }
+    private void registerCommand(Command command, Setting settingCondition){
+        if(isSetting(settingCondition))
+            commandManager.registerCommand(command);
     }
 
     private void sendInfoMessage(String message){

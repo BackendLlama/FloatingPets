@@ -129,6 +129,7 @@ public abstract class StorageManager {
                 .type(type)
                 .skills(new ArrayList<>())
                 .extra(new HashMap<>())
+                .plugin(plugin)
                 .build();
 
         storePet(pet, true);

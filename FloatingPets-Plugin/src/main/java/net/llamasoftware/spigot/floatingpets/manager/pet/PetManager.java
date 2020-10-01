@@ -9,6 +9,8 @@ import net.llamasoftware.spigot.floatingpets.locale.Locale;
 import net.llamasoftware.spigot.floatingpets.model.skill.AttributeSkill;
 import net.llamasoftware.spigot.floatingpets.task.PetHealthRegenerationTask;
 import net.llamasoftware.spigot.floatingpets.task.PetTickTask;
+import net.llamasoftware.spigot.floatingpets.task.animation.CircleAnimation;
+import net.llamasoftware.spigot.floatingpets.task.animation.FloatAnimation;
 import net.llamasoftware.spigot.floatingpets.util.NBTEditor;
 import lombok.Getter;
 import org.bukkit.Location;
@@ -63,6 +65,7 @@ public class PetManager {
         ArmorStand nameTag = onlineOwner.getWorld().spawn(location, ArmorStand.class);
         nameTag.setSmall(!plugin.isSetting(Setting.PET_HIGHER));
         nameTag.setVisible(false);
+        nameTag.setGravity(false);
         nameTag.setCustomNameVisible(true);
         nameTag.setMetadata(Constants.METADATA_NAME_TAG, new FixedMetadataValue(plugin, pet.getUniqueId()));
         nameTag.setCustomName(pet.getName());
@@ -82,6 +85,19 @@ public class PetManager {
         pet.setNameTag(nameTag);
         pet.setEntity(floatingPet);
         pet.attachNameTag();
+
+        switch (plugin.getSettingManager().getAnimationType()){
+            case CIRCLE:{
+                pet.setAnimation(new CircleAnimation(pet, onlineOwner));
+                break;
+            }
+
+            case FLOAT:
+                pet.setAnimation(new FloatAnimation(pet, onlineOwner));
+                break;
+            case NONE:
+                break;
+        }
 
         pet.getEntity().getEntity()
                 .setHealth(Double.parseDouble(plugin.getStringSetting(Setting.PET_DEFAULT_HEALTH)));

@@ -1,5 +1,6 @@
 package net.llamasoftware.spigot.floatingpets.model.pet;
 
+import net.llamasoftware.spigot.floatingpets.FloatingPets;
 import net.llamasoftware.spigot.floatingpets.api.model.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -33,6 +34,13 @@ public class IPet implements Pet {
     @Getter @Setter
     private boolean light;
     private Map<String, Object> extra;
+    @Getter
+    private boolean still;
+    @Getter @Setter
+    private long lastMove;
+    @Getter @Setter
+    private PetAnimation animation;
+    private FloatingPets plugin;
 
     @Override
     public void remove() {
@@ -112,6 +120,20 @@ public class IPet implements Pet {
     @Override
     public Object getExtra(String key) {
         return extra.get(key);
+    }
+
+    @Override
+    public void setStill(boolean still) {
+        this.still = still;
+
+        if(plugin.isSetting(Setting.PET_HIDE_NAME_ON_MOVE)){
+            getNameTag().setCustomNameVisible(still);
+        }
+    }
+
+    @Override
+    public boolean isStill() {
+        return still;
     }
 
     @Override

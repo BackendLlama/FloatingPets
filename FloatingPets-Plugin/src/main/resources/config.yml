@@ -27,7 +27,9 @@ settings:
         higher_pet: false
         movement:
             hide_name_on_move: false
-            still_float: true
+            still_animation:
+                enabled: true
+                type: "CIRCLE"
         categories:
             enabled: false
             types:

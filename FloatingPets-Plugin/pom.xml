@@ -38,10 +38,6 @@
             <url>https://maven.enginehub.org/repo/</url>
         </repository>
         <repository>
-            <id>zunarmc-pkgrepo</id>
-            <url>https://maven.jetbrains.space/zunarmc/zunarmc-pkgrepo</url>
-        </repository>
-        <repository>
             <id>CodeMC</id>
             <url>https://repo.codemc.org/repository/maven-public</url>
         </repository>
@@ -98,12 +94,6 @@
             <artifactId>ProtocolLib-API</artifactId>
             <version>4.4.0</version>
         </dependency>
-        <!--
-        <dependency>
-            <groupId>io.github.bananapuncher714</groupId>
-            <artifactId>NBTEditor</artifactId>
-            <version>7.15</version>
-        </dependency>-->
         <dependency>
             <groupId>com.github.MilkBowl</groupId>
             <artifactId>VaultAPI</artifactId>
@@ -134,15 +124,6 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
-            <!--
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>2.3.1</version>
-                <configuration>
-                    <outputDirectory>\\192.168.1.7\sambashare\Servers\Dev\FP\plugins</outputDirectory>
-                </configuration>
-            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
