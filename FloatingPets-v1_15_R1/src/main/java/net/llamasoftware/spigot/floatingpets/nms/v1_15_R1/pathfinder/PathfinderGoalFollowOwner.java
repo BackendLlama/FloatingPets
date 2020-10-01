@@ -56,7 +56,7 @@ public class PathfinderGoalFollowOwner extends PathfinderGoal {
         if(((LivingEntity) bukkitEntity).isLeashed())
             return;
 
-        if(bukkitEntity.getPassengers().stream()
+        if(pet.getNameTag().getPassengers().stream()
                 .anyMatch(passenger -> passenger instanceof Player))
             return;
 
