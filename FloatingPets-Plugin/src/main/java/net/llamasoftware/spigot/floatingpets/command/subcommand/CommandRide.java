@@ -23,6 +23,7 @@ public class CommandRide extends Command {
             return;
         }
 
+        pet.setStill(false);
         pet.getNameTag().addPassenger(player);
         locale.send(player, "commands.ride.riding", true);
 
