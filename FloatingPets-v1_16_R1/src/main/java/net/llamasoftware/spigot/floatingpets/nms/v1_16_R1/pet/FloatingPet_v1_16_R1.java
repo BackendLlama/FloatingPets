@@ -7,7 +7,6 @@ import net.minecraft.server.v1_16_R1.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_16_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_16_R1.entity.CraftPlayer;
 import org.bukkit.entity.Cat;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -25,7 +24,6 @@ public class FloatingPet_v1_16_R1 extends EntityCat implements FloatingPet {
     private Location location;
     private Player onlineOwner;
     private Map<Setting, String> settings;
-    private long latestTick;
 
     @SuppressWarnings({"unused", "rawtypes"})
     public FloatingPet_v1_16_R1(EntityTypes types, World world) {
@@ -93,10 +91,10 @@ public class FloatingPet_v1_16_R1 extends EntityCat implements FloatingPet {
         goalSelector.a(0, new PathfinderGoalLeapAtTarget(this, 0.7F));
 
         if(isSetting(Setting.PET_DAMAGE_BY_ATTACK)) {
-            goalSelector.a(0, new net.llamasoftware.spigot.floatingpets.nms.v1_16_R1.pathfinder.PathfinderGoalOwnerHurtByTarget(this,
-                    ((CraftPlayer) onlineOwner).getHandle()));
-            goalSelector.a(0, new net.llamasoftware.spigot.floatingpets.nms.v1_16_R1.pathfinder.PathfinderGoalOwnerHurtTarget(this,
-                    ((CraftPlayer) onlineOwner).getHandle()));
+            goalSelector.a(0, new net.llamasoftware.spigot.floatingpets.nms.v1_16_R1.pathfinder
+                    .PathfinderGoalOwnerHurtByTarget(this, pet));
+            goalSelector.a(0, new net.llamasoftware.spigot.floatingpets.nms.v1_16_R1.pathfinder
+                    .PathfinderGoalOwnerHurtTarget(this, pet));
         }
 
         goalSelector.a(7, new PathfinderGoalRandomStrollLand(this, 1.0D));

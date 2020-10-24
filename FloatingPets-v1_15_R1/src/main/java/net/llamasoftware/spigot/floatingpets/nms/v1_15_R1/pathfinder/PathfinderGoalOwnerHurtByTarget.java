@@ -1,6 +1,8 @@
 package net.llamasoftware.spigot.floatingpets.nms.v1_15_R1.pathfinder;
 
+import net.llamasoftware.spigot.floatingpets.api.model.Pet;
 import net.minecraft.server.v1_15_R1.*;
+import org.bukkit.craftbukkit.v1_15_R1.entity.CraftPlayer;
 import org.bukkit.event.entity.EntityTargetEvent;
 
 import java.util.EnumSet;
@@ -10,10 +12,12 @@ public class PathfinderGoalOwnerHurtByTarget extends PathfinderGoalTarget {
     private final EntityLiving owner;
     private EntityLiving target;
     private int c;
+    private final Pet pet;
 
-    public PathfinderGoalOwnerHurtByTarget(EntityCreature zombie, EntityLiving owner) {
+    public PathfinderGoalOwnerHurtByTarget(EntityCreature zombie, Pet pet) {
         super(zombie, false);
-        this.owner = owner;
+        this.pet = pet;
+        this.owner = ((CraftPlayer) pet.getOnlineOwner()).getHandle();
         this.a(EnumSet.of(PathfinderGoal.Type.TARGET));
     }
 
@@ -33,6 +37,7 @@ public class PathfinderGoalOwnerHurtByTarget extends PathfinderGoalTarget {
         if(target == null)
             return;
 
+        pet.setStill(false);
         this.e.setGoalTarget(this.target, EntityTargetEvent.TargetReason.CUSTOM, false);
         EntityLiving entityliving = owner;
 

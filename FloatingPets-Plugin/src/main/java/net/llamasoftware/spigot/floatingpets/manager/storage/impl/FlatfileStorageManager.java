@@ -268,7 +268,14 @@ public class FlatfileStorageManager extends StorageManager {
             }
 
             case EXTRA:{
-                pet.getExtra().forEach((key, value) -> updateValue(pet, "extra." + key, value));
+                if(pet.getExtra() == null)
+                    return;
+                
+                pet.getExtra().forEach((key, value) -> {
+                    if(key != null && value != null) {
+                        updateValue(pet, "extra." + key, value);
+                    }
+                });
 
                 break;
             }

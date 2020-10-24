@@ -51,7 +51,7 @@ settings:
                 vip: 4
                 mvp: 8
         skills:
-            enabled: true
+            enabled: false
             type_specific: false
             types:
                 max_health:
@@ -206,7 +206,7 @@ settings:
                     enabled: true
                 death_message: true
                 remove_on_death: true
-                respawn_on_death: true
+                respawn_on_death: false
                 damage:
                     fall: true
                     void: false

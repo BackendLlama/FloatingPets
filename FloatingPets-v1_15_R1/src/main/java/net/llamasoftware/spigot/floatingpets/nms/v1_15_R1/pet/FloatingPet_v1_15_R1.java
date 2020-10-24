@@ -87,10 +87,10 @@ public class FloatingPet_v1_15_R1 extends EntityCat implements FloatingPet {
         goalSelector.a(0, new PathfinderGoalLeapAtTarget(this, 0.7F));
 
         if(isSetting(Setting.PET_DAMAGE_BY_ATTACK)) {
-            goalSelector.a(0, new net.llamasoftware.spigot.floatingpets.nms.v1_15_R1.pathfinder.PathfinderGoalOwnerHurtByTarget(this,
-                    ((CraftPlayer) onlineOwner).getHandle()));
-            goalSelector.a(0, new net.llamasoftware.spigot.floatingpets.nms.v1_15_R1.pathfinder.PathfinderGoalOwnerHurtTarget(this,
-                    ((CraftPlayer) onlineOwner).getHandle()));
+            goalSelector.a(0, new net.llamasoftware.spigot.floatingpets.nms.v1_15_R1.pathfinder
+                    .PathfinderGoalOwnerHurtByTarget(this, pet));
+            goalSelector.a(0, new net.llamasoftware.spigot.floatingpets.nms.v1_15_R1.pathfinder
+                    .PathfinderGoalOwnerHurtTarget(this, pet));
         }
 
         goalSelector.a(7, new PathfinderGoalRandomStrollLand(this, 1.0D));

@@ -10,11 +10,11 @@
     <version>2.5.5-SNAPSHOT</version>
 
     <modules>
-        <module>floatingpets-api</module>
-        <module>floatingpets-v1_15_R1</module>
-        <module>floatingpets-v1_16_R1</module>
-        <module>floatingpets-v1_16_R2</module>
-        <module>floatingpets-plugin</module>
+        <module>FloatingPets-API</module>
+        <module>FloatingPets-v1_15_R1</module>
+        <module>FloatingPets-v1_16_R1</module>
+        <module>FloatingPets-v1_16_R2</module>
+        <module>FloatingPets-Plugin</module>
     </modules>
 
     <properties>

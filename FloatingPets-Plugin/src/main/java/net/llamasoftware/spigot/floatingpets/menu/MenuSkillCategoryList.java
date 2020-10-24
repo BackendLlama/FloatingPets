@@ -120,7 +120,10 @@ public class MenuSkillCategoryList extends Menu {
                     pet.getSkills().add(newSkill);
                     newSkill.applySkill(pet);
                     plugin.getStorageManager().updatePet(pet, StorageManager.Action.SKILL);
-                    plugin.getStorageManager().updatePet(pet, StorageManager.Action.EXTRA);
+
+                    if(pet.getExtra() != null) {
+                        plugin.getStorageManager().updatePet(pet, StorageManager.Action.EXTRA);
+                    }
 
                     economy.depositPlayer(player, cost);
                     plugin.getLocale().send(player, "skill.bought", true,
