@@ -219,7 +219,7 @@ public class EntityListener implements Listener {
                 if(!pet.isPresent())
                     return;
 
-                if(pet.get().getOwner().equals(player.getUniqueId())){ // ??? && !plugin.isSetting(Setting.PET_DAMAGE_ATTACKED_BY_OWNER)
+                if(pet.get().getOwner().equals(player.getUniqueId())){
                     event.setCancelled(true);
                 }
 

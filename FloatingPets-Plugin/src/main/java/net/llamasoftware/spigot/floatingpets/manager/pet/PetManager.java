@@ -11,7 +11,6 @@ import net.llamasoftware.spigot.floatingpets.task.PetHealthRegenerationTask;
 import net.llamasoftware.spigot.floatingpets.task.PetTickTask;
 import net.llamasoftware.spigot.floatingpets.task.animation.CircleAnimation;
 import net.llamasoftware.spigot.floatingpets.task.animation.FloatAnimation;
-import net.llamasoftware.spigot.floatingpets.util.NBTEditor;
 import lombok.Getter;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -110,9 +109,6 @@ public class PetManager {
         pet.getSkills().stream()
                 .filter(skill -> skill instanceof AttributeSkill)
                 .forEach(skill -> skill.applySkill(pet));
-
-        NBTEditor.set(pet.getEntity().getEntity(), 1, "FPComponent");
-        NBTEditor.set(nameTag, 1, "FPComponent");
 
         if(pet.hasParticle())
             pet.getParticle().start();

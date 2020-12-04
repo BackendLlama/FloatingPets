@@ -35,7 +35,7 @@ public class MenuPetParticle extends ListMenu<ParticleInfo> {
         int pIndex = getData("index", Integer.class);
 
         if (pet.hasParticle()) {
-            plugin.getLocale().send(player, "commands.particle.removed-current", false);
+            plugin.getLocale().send(player, "commands.particle.removed-current", true);
             pet.setParticle(null);
         }
 

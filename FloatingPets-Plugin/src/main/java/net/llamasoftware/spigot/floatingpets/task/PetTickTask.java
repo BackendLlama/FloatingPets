@@ -52,33 +52,39 @@ public class PetTickTask implements Runnable {
     }
 
     private void tickAutomaticHat(){
-        if(!owner.isOnGround() && !pet.getEntity().getEntity().isLeashed()){
-            int dist = plugin.getUtility().getDistanceFromGround(owner);
-            if(!owner.getPassengers().contains(pet.getNameTag())
-                    && !pet.getNameTag().getPassengers().contains(owner)
-                    && dist >= 8){
-
-                owner.addPassenger(pet.getNameTag());
-                pet.getNameTag().addPassenger(pet.getEntity().getEntity());
-                return;
-            }
-
-            if(dist > 2 && dist <= 4){
+        if(pet.getEntity().hasTarget()){
+            if(owner.getPassengers().contains(pet.getNameTag())){
                 owner.removePassenger(pet.getNameTag());
                 pet.getNameTag().removePassenger(pet.getEntity().getEntity());
+            }
+        } else {
+            if (!owner.isDead() &&
+                    !owner.isOnGround() && !pet.getEntity().getEntity().isLeashed()) {
+                int dist = plugin.getUtility().getDistanceFromGround(owner);
+                if (!owner.getPassengers().contains(pet.getNameTag())
+                        && !pet.getNameTag().getPassengers().contains(owner)
+                        && dist >= 8) {
+
+                    owner.addPassenger(pet.getNameTag());
+                    pet.getNameTag().addPassenger(pet.getEntity().getEntity());
+                    return;
+                }
+
+                if (dist > 2 && dist <= 4) {
+                    owner.removePassenger(pet.getNameTag());
+                    pet.getNameTag().removePassenger(pet.getEntity().getEntity());
+                }
             }
         }
     }
 
     private void tickChangeUpdate(){
         if(hasChanged()) {
-            if (pet.getEntity().getEntityHealth() != lastHealth) {
+            if (pet.getEntity().getEntityHealth() != lastHealth)
                 lastHealth = pet.getEntity().getEntityHealth();
-            }
 
-            if (!pet.getName().equals(lastTitle)) {
+            if (!pet.getName().equals(lastTitle))
                 lastTitle = pet.getName();
-            }
 
             pet.getNameTag().setCustomName(plugin.getUtility().formatTitle(pet,
                     owner.hasPermission("floatingpets.name.color")));
@@ -94,7 +100,8 @@ public class PetTickTask implements Runnable {
     }
 
     private boolean hasChanged(){
-        return pet.getEntity().getEntityHealth() != lastHealth || !pet.getName().equals(lastTitle);
+        return pet.getEntity().getEntityHealth() != lastHealth
+                || !pet.getName().equals(lastTitle);
     }
 
 }

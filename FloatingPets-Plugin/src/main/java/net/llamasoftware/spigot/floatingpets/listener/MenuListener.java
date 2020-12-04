@@ -54,15 +54,14 @@ public class MenuListener implements Listener {
             return;
 
         Player player = (Player) event.getPlayer();
-
         Menu menu = plugin.getMenuManager().getOpenedMenu(player.getUniqueId());
+
         if(menu == null)
             return;
 
         menu.onClose(player);
 
         plugin.getMenuManager().clearMenu(player.getUniqueId());
-
     }
 
 }

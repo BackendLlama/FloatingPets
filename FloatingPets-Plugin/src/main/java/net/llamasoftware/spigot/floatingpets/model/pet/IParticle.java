@@ -60,7 +60,8 @@ public class IParticle implements Particle {
         if(particle != org.bukkit.Particle.REDSTONE){
             player.spawnParticle(particle, location, i, v, v, v, v3);
         } else {
-            player.spawnParticle(particle, location, i, v, v, v, v3, new org.bukkit.Particle.DustOptions(Color.RED, 1));
+            player.spawnParticle(particle, location, i, v, v, v, v3,
+                    new org.bukkit.Particle.DustOptions(Color.RED, 1));
         }
     }
 

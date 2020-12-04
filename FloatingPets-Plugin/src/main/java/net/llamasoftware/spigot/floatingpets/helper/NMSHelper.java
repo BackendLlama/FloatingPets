@@ -29,12 +29,13 @@ public class NMSHelper {
     public NMSHelper(){
         try {
             if(getCurrentVersion() != null) {
-                nmsManager = (NMSManager) Class.forName("net.llamasoftware.spigot.floatingpets.nms." + getCurrentVersion().name() + ".NMSManagerImpl")
-                                                                                                                .getConstructor().newInstance();
+                nmsManager = (NMSManager) Class.forName("net.llamasoftware.spigot.floatingpets.nms."
+                        + getCurrentVersion() + ".NMSManagerImpl").getConstructor().newInstance();
             } else {
                 System.out.println(Bukkit.getServer().getClass().getPackage().getName() + " is not supported by FloatingPets.");
             }
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | ClassNotFoundException e) {
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException
+                | NoSuchMethodException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -67,28 +68,11 @@ public class NMSHelper {
         nmsManager.registerEntity();
     }
 
-    @SuppressWarnings("unused")
-    private enum NMSVersion {
-        /*v1_8_R1,
-        v1_8_R2,
-        v1_8_R3,
-        v1_9_R1,
-        v1_9_R2,
-        v1_10_R1,
-        v1_11_R1,*/
-        v1_12_R1,
-        /*v1_13_R1,
-        v1_13_R2,
-        v1_14_R1, We haven't added support for these yet */
-        v1_15_R1,
-        v1_16_R1,
-        v1_16_R2
-    }
 
-    private NMSVersion getCurrentVersion(){
+    private String getCurrentVersion(){
         Matcher matcher = Pattern.compile("v\\d+_\\d+_R\\d+").matcher(Bukkit.getServer().getClass().getPackage().getName());
         if (matcher.find()) {
-            return NMSVersion.valueOf(matcher.group());
+            return matcher.group();
         } else {
             return null;
         }

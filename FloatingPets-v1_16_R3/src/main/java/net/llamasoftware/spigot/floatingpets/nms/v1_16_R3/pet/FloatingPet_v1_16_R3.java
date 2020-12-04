@@ -1,12 +1,12 @@
-package net.llamasoftware.spigot.floatingpets.nms.v1_16_R2.pet;
+package net.llamasoftware.spigot.floatingpets.nms.v1_16_R3.pet;
 
 import net.llamasoftware.spigot.floatingpets.api.model.FloatingPet;
 import net.llamasoftware.spigot.floatingpets.api.model.Pet;
 import net.llamasoftware.spigot.floatingpets.api.model.Setting;
-import net.minecraft.server.v1_16_R2.*;
+import net.minecraft.server.v1_16_R3.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_16_R2.CraftWorld;
+import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
 import org.bukkit.entity.Cat;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -18,7 +18,7 @@ import org.bukkit.plugin.Plugin;
 import java.lang.reflect.Field;
 import java.util.*;
 
-public class FloatingPet_v1_16_R2 extends EntityCat implements FloatingPet {
+public class FloatingPet_v1_16_R3 extends EntityCat implements FloatingPet {
 
     private Pet pet;
     private Location location;
@@ -26,7 +26,7 @@ public class FloatingPet_v1_16_R2 extends EntityCat implements FloatingPet {
     private Map<Setting, String> settings;
 
     @SuppressWarnings({"unused", "rawtypes"})
-    public FloatingPet_v1_16_R2(EntityTypes types, World world) {
+    public FloatingPet_v1_16_R3(EntityTypes types, World world) {
         super(EntityTypes.CAT, world);
     }
 
@@ -91,13 +91,13 @@ public class FloatingPet_v1_16_R2 extends EntityCat implements FloatingPet {
         if(isSetting(Setting.PET_DAMAGE_BY_ATTACK)) {
             goalSelector.a(0, new PathfinderGoalMeleeAttack(this, 1.2D, true));
             goalSelector.a(0, new PathfinderGoalLeapAtTarget(this, 0.7F));
-            goalSelector.a(0, new net.llamasoftware.spigot.floatingpets.nms.v1_16_R2.pathfinder
+            goalSelector.a(0, new net.llamasoftware.spigot.floatingpets.nms.v1_16_R3.pathfinder
                     .PathfinderGoalOwnerHurtByTarget(this, pet));
-            goalSelector.a(0, new net.llamasoftware.spigot.floatingpets.nms.v1_16_R2.pathfinder
+            goalSelector.a(0, new net.llamasoftware.spigot.floatingpets.nms.v1_16_R3.pathfinder
                     .PathfinderGoalOwnerHurtTarget(this, pet));
         }
 
-        goalSelector.a(8, new net.llamasoftware.spigot.floatingpets.nms.v1_16_R2.pathfinder
+        goalSelector.a(8, new net.llamasoftware.spigot.floatingpets.nms.v1_16_R3.pathfinder
                 .PathfinderGoalFollowOwner(this, onlineOwner, 1.2));
         goalSelector.a(8, new PathfinderGoalLookAtPlayer(this, EntityHuman.class, 8.0F));
         goalSelector.a(8, new PathfinderGoalRandomLookaround(this));

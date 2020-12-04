@@ -19,7 +19,7 @@ public class CommandHat extends Command {
     public void onCommand(CommandSender sender, String[] arguments) {
         Player player = (Player) sender;
 
-        if(!plugin.isSetting(Setting.PET_HAT_COSMETIC)){
+        if(!plugin.isSetting(Setting.PET_HAT_COSMETIC)) {
             locale.send(player, "generic.functionality-disabled", false);
             return;
         }
@@ -29,13 +29,14 @@ public class CommandHat extends Command {
     }
 
     private boolean toggleHat(Pet pet, Player player){
-        boolean val = pet.isRiding(player);
-        if(!val){
+        boolean riding = pet.isRiding(player);
+        if(!riding){
             pet.ride(player);
         } else {
             pet.stopRiding(player);
         }
-        return !val;
+
+        return !riding;
     }
 
 }

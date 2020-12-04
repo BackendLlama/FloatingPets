@@ -24,6 +24,7 @@ public class CommandTeleport extends Command {
             return;
         }
 
+        pet.getEntity().removeTarget();
         pet.getEntity().teleportToOwner();
         locale.send(player, "commands.teleport.teleported", true);
 

@@ -40,7 +40,8 @@ public class IPet implements Pet {
     private long lastMove;
     @Getter @Setter
     private PetAnimation animation;
-    private FloatingPets plugin;
+
+    private final FloatingPets plugin;
 
     @Override
     public void remove() {
@@ -129,11 +130,6 @@ public class IPet implements Pet {
         if(plugin.isSetting(Setting.PET_HIDE_NAME_ON_MOVE)){
             getNameTag().setCustomNameVisible(still);
         }
-    }
-
-    @Override
-    public boolean isStill() {
-        return still;
     }
 
     @Override
